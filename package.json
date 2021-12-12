@@ -2,12 +2,13 @@
   "name": "gardenly",
   "version": "1.0.0",
   "description": "This is a simple project based on selling flowers inspired by Coder's Gyan realtime-pizza web app.",
-  "main": "index.js",
+  "main": "server.js",
   "author": "Josli Shubho Biswas",
   "license": "MIT",
   "scripts": {
-    "dev": "SET NODE_ENV=development&&nodemon index.js",
-    "build": "SET NODE_ENV=production&&node index.js"
+    "dev": "SET NODE_ENV=development&&nodemon server.js",
+    "prod": "SET NODE_ENV=production&&node server.js",
+    "watch": "mix watch"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
@@ -19,6 +20,10 @@
     "jwtoken": "^0.0.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.15"
+    "laravel-mix": "^6.0.39",
+    "nodemon": "^2.0.15",
+    "resolve-url-loader": "4.0.0",
+    "sass": "^1.45.0",
+    "sass-loader": "12.1.0"
   }
 }

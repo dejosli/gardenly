@@ -1,22 +1,37 @@
 // external imports
 const dotenv = require('dotenv').config();
 const express = require('express');
-const router = express.Router();
+const ejs = require('ejs');
+const path = require('path');
+const cookieParser = require('cookie-parser');
 
+// init express app
 const app = express();
 
-// port setup
-const PORT = process.env.NODE_ENV === 'production' ? process.env.PORT : 3000;
+// request parsers
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// server setup
-const server = () => {
-  app.listen(PORT, () => {
-    console.log(`Server listening on ${PORT}`);
-  });
-};
+// parse cookies
+app.use(cookieParser(process.env.COOKIE_SECRET));
 
-// exports
-module.exports = {
-  server,
-  router,
-};
+// set static folder
+app.use(express.static(path.join(__dirname, 'public')));
+
+// set view engine
+app.set('views', path.join(__dirname, '/resources/views'));
+app.set('view engine', 'ejs');
+
+// routes setup
+app.get('/', (req, res) => {
+  res.render('home');
+});
+
+// init server
+const PORT =
+  process.env.PORT && process.env.NODE_ENV === 'production'
+    ? process.env.PORT
+    : 3000;
+app.listen(PORT, () => {
+  console.log(`Server listening at http://localhost:${PORT}`);
+});
