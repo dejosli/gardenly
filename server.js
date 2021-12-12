@@ -1,7 +1,6 @@
 // external imports
-const dotenv = require('dotenv').config();
+require('dotenv').config();
 const express = require('express');
-const ejs = require('ejs');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 
