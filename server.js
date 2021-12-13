@@ -23,7 +23,7 @@ app.set('view engine', 'ejs');
 
 // routes setup
 app.get('/', (req, res) => {
-  res.render('home');
+  res.status(200).render('home');
 });
 
 // init server

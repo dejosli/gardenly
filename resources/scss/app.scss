@@ -1,3 +1,59 @@
+@import 'abstracts/variables';
+@import 'vendors/tailwind';
+
 body {
     font-family: 'Lato', sans-serif;
+    color: $dark;
+}
+
+// navbar 
+nav li:last-child a {
+    background-color: $primary;
+
+    &:hover {
+        background-color: $primary-hover;
+    }
+}
+
+nav li a {
+    &:hover {
+        color: $primary-hover;
+    }
+
+    transition: all $smooth ease-in-out;
+}
+
+// hero section
+section.hero {
+    background-color: $secondary;
+}
+
+.size {
+    background-color: $secondary;
+}
+
+// button 
+.call-to-action {
+    color: $pure;
+    background-color: $primary;
+    border: 2px solid $pure;
+    transition: $smooth;
+
+    &:hover {
+        color: $primary;
+        border-color: $primary;
+        background-color: $pure;
+    }
+}
+
+.add-to-cart {
+    color: $primary;
+    border: 2px solid $primary;
+    transition: $smooth;
+
+    &:hover {
+        color: $pure;
+        background-color: $primary;
+        border-color: $pure;
+    }
 }
