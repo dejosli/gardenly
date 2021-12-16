@@ -33,16 +33,12 @@ section.hero {
 }
 
 // button 
-.call-to-action {
-    color: $pure;
+.btn-primary {
     background-color: $primary;
-    border: 2px solid $pure;
     transition: $smooth;
 
     &:hover {
-        color: $primary;
-        border-color: $primary;
-        background-color: $pure;
+        background-color: $primary-hover;
     }
 }
 
@@ -55,5 +51,38 @@ section.hero {
         color: $pure;
         background-color: $primary;
         border-color: $pure;
+    }
+}
+
+// Cart
+section.cart {
+    background-color: $secondary;
+
+    .amount {
+        color: $primary;
+    }
+}
+
+// login and register form
+section.login,
+section.register {
+    background-color: $secondary;
+    min-height: calc(100vh - $navbarHeight);
+
+    a {
+        color: $primary;
+
+        &:hover {
+            color: $primary-hover;
+        }
+    }
+}
+
+section.login form,
+section.register form {
+
+    input:focus,
+    input:focus-visible {
+        border-color: $primary;
     }
 }

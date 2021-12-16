@@ -1,8 +1,9 @@
 // external imports
 require('dotenv').config();
 const express = require('express');
-const path = require('path');
 const cookieParser = require('cookie-parser');
+const path = require('path');
+const expressLayouts = require('express-ejs-layouts');
 
 // init express app
 const app = express();
@@ -20,10 +21,23 @@ app.use(express.static(path.join(__dirname, 'public')));
 // set view engine
 app.set('views', path.join(__dirname, '/resources/views'));
 app.set('view engine', 'ejs');
+app.use(expressLayouts);
 
 // routes setup
 app.get('/', (req, res) => {
   res.status(200).render('home');
+});
+
+app.get('/login', (req, res) => {
+  res.status(200).render('auth/login');
+});
+
+app.get('/register', (req, res) => {
+  res.status(200).render('auth/register');
+});
+
+app.get('/cart', (req, res) => {
+  res.status(200).render('customers/cart');
 });
 
 // init server

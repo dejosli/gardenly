@@ -20,6 +20,7 @@
     "jwtoken": "^0.0.0"
   },
   "devDependencies": {
+    "@tailwindcss/forms": "^0.4.0",
     "autoprefixer": "^10.4.0",
     "laravel-mix": "^6.0.39",
     "nodemon": "^2.0.15",
