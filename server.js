@@ -1,12 +1,36 @@
 // external imports
 require('dotenv').config();
 const express = require('express');
+const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const path = require('path');
 const expressLayouts = require('express-ejs-layouts');
 
+// internal imports
+const {
+  notFoundHandler,
+  errorHandler,
+} = require('./app/http/middleware/common/errorHandler');
+const webRoutes = require('./routes/web');
+
 // init express app
 const app = express();
+
+// db connection - mongodb
+mongoose
+  .connect(process.env.MONGO_CONNECTION_STRING, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log('Database Connected...');
+  })
+  .catch((err) => {
+    if (process.env.NODE_ENV === 'development') {
+      console.log(err);
+    }
+    console.log('Database Connection Failed...');
+  });
 
 // request parsers
 app.use(express.json());
@@ -24,21 +48,13 @@ app.set('view engine', 'ejs');
 app.use(expressLayouts);
 
 // routes setup
-app.get('/', (req, res) => {
-  res.status(200).render('home');
-});
+app.use('/', webRoutes);
 
-app.get('/login', (req, res) => {
-  res.status(200).render('auth/login');
-});
+// notfound handler
+app.use(notFoundHandler);
 
-app.get('/register', (req, res) => {
-  res.status(200).render('auth/register');
-});
-
-app.get('/cart', (req, res) => {
-  res.status(200).render('customers/cart');
-});
+// error handler
+app.use(errorHandler);
 
 // init server
 const PORT =
