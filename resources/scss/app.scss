@@ -1,4 +1,5 @@
 @import 'abstracts/variables';
+@import 'vendors/noty';
 @import 'vendors/tailwind';
 
 body {
@@ -79,7 +80,8 @@ section.register {
 }
 
 section.login form,
-section.register form {
+section.register form,
+.shiping-info form {
 
     input:focus,
     input:focus-visible {

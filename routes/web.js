@@ -10,6 +10,7 @@ const {
 } = require('../app/http/controllers/authController');
 const {
   cartIndexController,
+  updateCartController,
 } = require('../app/http/controllers/customers/cartController');
 
 // index routes
@@ -18,8 +19,10 @@ router.get('/', indexController);
 router.get('/login', loginController);
 // register routes
 router.get('/register', registerController);
+
 // cart routes
 router.get('/cart', cartIndexController);
+router.post('/update-cart', updateCartController);
 
 // exports
 module.exports = router;

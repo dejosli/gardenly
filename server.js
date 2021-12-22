@@ -1,9 +1,12 @@
 // external imports
 require('dotenv').config();
+const path = require('path');
 const express = require('express');
 const mongoose = require('mongoose');
+const session = require('express-session');
+const flash = require('express-flash');
+const MongoStore = require('connect-mongo');
 const cookieParser = require('cookie-parser');
-const path = require('path');
 const expressLayouts = require('express-ejs-layouts');
 
 // internal imports
@@ -12,6 +15,7 @@ const {
   errorHandler,
 } = require('./app/http/middleware/common/errorHandler');
 const webRoutes = require('./routes/web');
+const sessionHandler = require('./app/http/middleware/sessionHandler');
 
 // init express app
 const app = express();
@@ -39,6 +43,29 @@ app.use(express.urlencoded({ extended: true }));
 // parse cookies
 app.use(cookieParser(process.env.COOKIE_SECRET));
 
+// config session store
+const mongoStore = MongoStore.create({
+  mongoUrl: process.env.MONGO_CONNECTION_STRING,
+  collectionName: 'sessions',
+  crypto: {
+    secret: process.env.MONGO_STORE_SECRET,
+  },
+});
+
+// config session
+app.use(
+  session({
+    secret: process.env.COOKIE_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    store: mongoStore,
+    cookie: { maxAge: 1000 * 60 * 60 * 24 }, // 24 hours
+  })
+);
+
+// flash
+app.use(flash());
+
 // set static folder
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -46,6 +73,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.set('views', path.join(__dirname, '/resources/views'));
 app.set('view engine', 'ejs');
 app.use(expressLayouts);
+
+// global middleware
+app.use(sessionHandler);
 
 // routes setup
 app.use('/', webRoutes);
