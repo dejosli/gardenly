@@ -55,8 +55,9 @@
             type="text"
             placeholder="Address"
           />
+          <% if (user) { %>
           <div>
-            <!-- <button
+            <button
               type="submit"
               class="
                 btn-primary
@@ -69,10 +70,12 @@
               "
             >
               Order Now
-            </button> -->
+            </button>
           </div>
+          <% } %>
         </form>
       </div>
+      <% if (!user) { %>
       <a
         href="/login"
         class="
@@ -87,6 +90,7 @@
         "
         >Login to continue</a
       >
+      <% } %>
     </div>
   </div>
   <% } else { %>

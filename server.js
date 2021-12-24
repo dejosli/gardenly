@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const flash = require('express-flash');
 const MongoStore = require('connect-mongo');
+const passport = require('passport');
 const cookieParser = require('cookie-parser');
 const expressLayouts = require('express-ejs-layouts');
 
@@ -15,7 +16,12 @@ const {
   errorHandler,
 } = require('./app/http/middleware/common/errorHandler');
 const webRoutes = require('./routes/web');
-const sessionHandler = require('./app/http/middleware/sessionHandler');
+const globalMiddleware = require('./app/http/middleware/common/globalMiddleware');
+const {
+  initLocalStrategy,
+  initSerializeUser,
+  initDeserializeUser,
+} = require('./app/config/passport');
 
 // init express app
 const app = express();
@@ -66,6 +72,14 @@ app.use(
 // flash
 app.use(flash());
 
+// passport init
+app.use(passport.initialize());
+app.use(passport.session());
+// passport config
+passport.use(initLocalStrategy);
+passport.serializeUser(initSerializeUser);
+passport.deserializeUser(initDeserializeUser);
+
 // set static folder
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -75,7 +89,7 @@ app.set('view engine', 'ejs');
 app.use(expressLayouts);
 
 // global middleware
-app.use(sessionHandler);
+app.use(globalMiddleware);
 
 // routes setup
 app.use('/', webRoutes);

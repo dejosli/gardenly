@@ -1,5 +1,5 @@
 // internal imports
-const Menu = require('../../models/menu');
+const Menu = require('../../models/Menu');
 
 // render home
 const indexController = async (req, res, next) => {

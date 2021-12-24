@@ -24,8 +24,12 @@
       <div>
         <ul class="flex items-center">
           <li class="ml-6"><a href="#">Menu</a></li>
+          <% if (user) { %>
+          <li class="ml-6"><a href="/logout" id="logout">Logout</a></li>
+          <% } else { %>
           <li class="ml-6"><a href="/register">Register</a></li>
           <li class="ml-6"><a href="/login">Login</a></li>
+          <% } %>
           <li class="ml-6">
             <a href="/cart" class="px-4 py-2 rounded-full flex items-center">
               <span id="cartCounter" class="pr-2 font-bold text-white"
