@@ -29,7 +29,7 @@ const notyMessage = function (
 const updateCart = async function (pizza) {
   try {
     const res = await axios.post('/update-cart', pizza);
-    cartCounter.innerText = res.data.totalQty;
+    cartCounter.innerText = res.data.cart.totalQty;
     notyMessage('success', 'Item added to cart'); // notification
   } catch (err) {
     console.log(err);
@@ -149,15 +149,17 @@ if (loginFormEle) {
 }
 
 // logout customer
-logoutEle.addEventListener('click', async function (e) {
-  e.preventDefault();
-  try {
-    const res = await axios.post('/logout');
-    // if success - redirect to success url
-    if (res.data.success) {
-      location.replace(res.data.success.redirectUrl);
+if (logoutEle) {
+  logoutEle.addEventListener('click', async function (e) {
+    e.preventDefault();
+    try {
+      const res = await axios.post('/logout');
+      // if success - redirect to success url
+      if (res.data.success) {
+        location.replace(res.data.success.redirectUrl);
+      }
+    } catch (err) {
+      console.log(err);
     }
-  } catch (err) {
-    console.log(err);
-  }
-});
+  });
+}

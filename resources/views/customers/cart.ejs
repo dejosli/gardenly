@@ -7,7 +7,7 @@
       <h2 class="font-bold ml-4 text-2xl">Order Summary</h2>
     </div>
     <div class="pizza-list border-b border-gray-300">
-      <% Object.values(session.cart.items).forEach((pizza) => { %>
+      <% Object.values(session.cart[cartId].items).forEach((pizza) => { %>
       <div class="list-group flex items-center my-8">
         <img class="w-24" src="/img/<%= pizza.item.image %>" alt="pizza" />
         <div class="ml-4 flex-1">
@@ -26,10 +26,10 @@
       <div class="">
         <span class="text-lg font-bold">Total Amount:</span>
         <span class="amount text-2xl font-bold ml-2"
-          >৳<%= session.cart.totalPrice %></span
+          >৳<%= session.cart[cartId].totalPrice %></span
         >
       </div>
-
+      <% if (user) { %>
       <div class="mt-12 shiping-info">
         <form class="">
           <input
@@ -55,7 +55,7 @@
             type="text"
             placeholder="Address"
           />
-          <% if (user) { %>
+
           <div>
             <button
               type="submit"
@@ -72,10 +72,9 @@
               Order Now
             </button>
           </div>
-          <% } %>
         </form>
       </div>
-      <% if (!user) { %>
+      <% } else { %>
       <a
         href="/login"
         class="

@@ -10,7 +10,7 @@ const {
   registerController,
   loginController,
   logoutController,
-  isAuthenticatedUser,
+  isLoggedIn,
 } = require('../app/http/controllers/authController');
 const {
   cartIndexController,
@@ -29,10 +29,10 @@ const {
 router.get('/', indexController);
 
 // login routes
-router.get('/login', isAuthenticatedUser, getLoginController);
+router.get('/login', isLoggedIn, getLoginController);
 router.post(
   '/login',
-  isAuthenticatedUser,
+  isLoggedIn,
   doLoginValidators,
   doLoginValidationHandler,
   loginController
@@ -40,10 +40,10 @@ router.post(
 router.post('/logout', logoutController);
 
 // register routes
-router.get('/register', isAuthenticatedUser, getRegisterController);
+router.get('/register', isLoggedIn, getRegisterController);
 router.post(
   '/register',
-  isAuthenticatedUser,
+  isLoggedIn,
   addUserValidators,
   addUserValidationHandler,
   registerController

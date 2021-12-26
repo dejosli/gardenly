@@ -8,9 +8,10 @@ const notFoundHandler = (req, res, next) => {
 
 // default error handler
 const errorHandler = (err, req, res, next) => {
-  res.locals.error =
-    process.env.NODE_ENV === 'development' ? err : { message: err.message };
-  res.status(err.status || 500).send(res.locals.error);
+  if (process.env.NODE_ENV === 'development') {
+    return next(createError(500, err));
+  }
+  return res.status(err.status || 500).json({ error: 'Internal Server Error' });
 };
 
 // exports

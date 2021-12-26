@@ -2218,7 +2218,7 @@ var updateCart = /*#__PURE__*/function () {
 
           case 3:
             res = _context.sent;
-            cartCounter.innerText = res.data.totalQty;
+            cartCounter.innerText = res.data.cart.totalQty;
             notyMessage('success', 'Item added to cart'); // notification
 
             _context.next = 12;
@@ -2399,46 +2399,48 @@ if (loginFormEle) {
 } // logout customer
 
 
-logoutEle.addEventListener('click', /*#__PURE__*/function () {
-  var _ref4 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4(e) {
-    var res;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
-      while (1) {
-        switch (_context4.prev = _context4.next) {
-          case 0:
-            e.preventDefault();
-            _context4.prev = 1;
-            _context4.next = 4;
-            return axios__WEBPACK_IMPORTED_MODULE_1___default().post('/logout');
+if (logoutEle) {
+  logoutEle.addEventListener('click', /*#__PURE__*/function () {
+    var _ref4 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4(e) {
+      var res;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
+        while (1) {
+          switch (_context4.prev = _context4.next) {
+            case 0:
+              e.preventDefault();
+              _context4.prev = 1;
+              _context4.next = 4;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().post('/logout');
 
-          case 4:
-            res = _context4.sent;
+            case 4:
+              res = _context4.sent;
 
-            // if success - redirect to success url
-            if (res.data.success) {
-              location.replace(res.data.success.redirectUrl);
-            }
+              // if success - redirect to success url
+              if (res.data.success) {
+                location.replace(res.data.success.redirectUrl);
+              }
 
-            _context4.next = 11;
-            break;
+              _context4.next = 11;
+              break;
 
-          case 8:
-            _context4.prev = 8;
-            _context4.t0 = _context4["catch"](1);
-            console.log(_context4.t0);
+            case 8:
+              _context4.prev = 8;
+              _context4.t0 = _context4["catch"](1);
+              console.log(_context4.t0);
 
-          case 11:
-          case "end":
-            return _context4.stop();
+            case 11:
+            case "end":
+              return _context4.stop();
+          }
         }
-      }
-    }, _callee4, null, [[1, 8]]);
-  }));
+      }, _callee4, null, [[1, 8]]);
+    }));
 
-  return function (_x4) {
-    return _ref4.apply(this, arguments);
-  };
-}());
+    return function (_x4) {
+      return _ref4.apply(this, arguments);
+    };
+  }());
+}
 
 /***/ }),
 

@@ -5,7 +5,7 @@ const passport = require('passport');
 // internal imports
 const User = require('../../models/People');
 
-const isAuthenticatedUser = (req, res, next) => {
+const isLoggedIn = (req, res, next) => {
   // check if user is already logged in or not
   if (req.isAuthenticated()) {
     return res.redirect('/');
@@ -97,5 +97,5 @@ module.exports = {
   registerController,
   loginController,
   logoutController,
-  isAuthenticatedUser,
+  isLoggedIn,
 };
