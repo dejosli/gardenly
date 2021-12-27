@@ -3,6 +3,7 @@ require('dotenv').config();
 const path = require('path');
 const express = require('express');
 const mongoose = require('mongoose');
+const morgan = require('morgan');
 const session = require('express-session');
 const flash = require('express-flash');
 const MongoStore = require('connect-mongo');
@@ -25,6 +26,11 @@ const {
 
 // init express app
 const app = express();
+
+// logger - morgan
+const loggerFormat =
+  process.env.NODE_ENV === 'development' ? 'dev' : 'combined';
+app.use(morgan(loggerFormat));
 
 // db connection - mongodb
 mongoose
