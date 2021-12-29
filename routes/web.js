@@ -15,6 +15,7 @@ const {
 const {
   cartIndexController,
   updateCartController,
+  initSessionCart,
 } = require('../app/http/controllers/customers/cartController');
 const {
   addUserValidators,
@@ -26,7 +27,7 @@ const {
 } = require('../app/http/middleware/auth/loginValidators');
 
 // index routes
-router.get('/', indexController);
+router.get('/', initSessionCart, indexController);
 
 // login routes
 router.get('/login', isLoggedIn, getLoginController);

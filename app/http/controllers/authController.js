@@ -4,6 +4,7 @@ const passport = require('passport');
 
 // internal imports
 const User = require('../../models/People');
+const { mergeCart } = require('../controllers/customers/cartController');
 
 const isLoggedIn = (req, res, next) => {
   // check if user is already logged in or not
@@ -40,12 +41,20 @@ const loginController = (req, res, next) => {
       if (err) {
         return next(err);
       }
-      return res.status(200).json({
-        success: {
-          msg: info.message,
-          redirectUrl: '/',
-        },
-      });
+      // merge session cart data and mongo cart data
+      mergeCart(req, res)
+        .then((cart) => {
+          req.session.cart = cart;
+          return res.status(200).json({
+            success: {
+              msg: info.message,
+              redirectUrl: '/',
+            },
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     });
   })(req, res, next);
 };
@@ -53,6 +62,7 @@ const loginController = (req, res, next) => {
 // POST - logged out user
 const logoutController = (req, res, next) => {
   req.logout(); // logout user
+  // req.session.destroy(); // TODO: delete previous session
   res.status(200).json({
     success: {
       msg: 'You have been logged out',

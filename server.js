@@ -30,7 +30,7 @@ const app = express();
 // logger - morgan
 const loggerFormat =
   process.env.NODE_ENV === 'development' ? 'dev' : 'combined';
-app.use(morgan(loggerFormat));
+// app.use(morgan(loggerFormat)); //TODO:
 
 // db connection - mongodb
 mongoose

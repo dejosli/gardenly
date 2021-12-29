@@ -33,8 +33,9 @@
           <li class="ml-6">
             <a href="/cart" class="px-4 py-2 rounded-full flex items-center">
               <span id="cartCounter" class="pr-2 font-bold text-white"
-                ><%= session.cart ? session.cart[cartId].totalQty : '' %>
-              </span>
+                ><%= session.cart && session.cart.totalQty ?
+                session.cart.totalQty : '' %></span
+              >
               <img src="/img/cart.png" alt="cart" />
             </a>
           </li>
