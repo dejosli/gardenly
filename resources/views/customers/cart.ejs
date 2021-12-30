@@ -8,16 +8,33 @@
     </div>
     <div class="pizza-list border-b border-gray-300">
       <% Object.values(session.cart.items).forEach((pizza) => { %>
-      <div class="list-group flex items-center my-8">
-        <img class="w-24" src="/img/<%= pizza.item.image %>" alt="pizza" />
-        <div class="ml-4 flex-1">
-          <h2><%= pizza.item.name %></h2>
-          <span class="size text-xs uppercase"><%= pizza.item.size %></span>
+      <div class="list-group flex items-center justify-between my-8">
+        <div class="flex items-center flex-1">
+          <img class="w-24" src="/img/<%= pizza.item.image %>" alt="pizza" />
+          <div class="ml-4">
+            <h2><%= pizza.item.name %></h2>
+            <span class="size text-xs uppercase"><%= pizza.item.size %></span>
+          </div>
         </div>
-        <span class="flex-1"><%= pizza.qty %> Pcs</span>
-        <span class="font-bold text-lg"
+
+        <!-- quantity counter start -->
+        <div class="custom-number-input h-10 w-full ml-16 flex-1">
+          <div class="flex flex-row h-10 w-3/5 rounded-lg relative bg-transparent mt-1">
+            <button data-action="decrement" class=" bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-l cursor-pointer outline-none">
+              <span class="m-auto text-2xl font-thin">−</span>
+            </button>
+            <input type="number" class="focus:ring-transparent focus:outline-none text-center w-full bg-gray-200  font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center text-gray-700  outline-none" name="custom-input-number" value="<%= pizza.qty %>" min="1"></input>
+            <button data-action="increment" class="bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-r cursor-pointer">
+              <span class="m-auto text-2xl font-thin">+</span>
+            </button>
+          </div>
+        </div>
+        <!-- quantity counter end -->
+        <span class="flex-1">৳<%= pizza.item.price %></span>
+        <span class="font-bold text-lg flex-1"
           >৳<%= pizza.qty * pizza.item.price %></span
         >
+        <span class="cursor-pointer font-bold text-xl text-orange-500 hover:text-orange-700">x</span>
       </div>
       <% }) %>
     </div>

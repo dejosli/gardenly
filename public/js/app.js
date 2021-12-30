@@ -2189,7 +2189,9 @@ var addToCart = document.querySelectorAll('.add-to-cart');
 var cartCounter = document.getElementById('cartCounter');
 var registerFormEle = document.getElementById('registerForm');
 var loginFormEle = document.getElementById('loginForm');
-var logoutEle = document.getElementById('logout'); // notification - message
+var logoutEle = document.getElementById('logout');
+var decrementButtons = document.querySelectorAll("button[data-action=\"decrement\"]");
+var incrementButtons = document.querySelectorAll("button[data-action=\"increment\"]"); // notification - message
 
 var notyMessage = function notyMessage() {
   var msgType = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'warning';
@@ -2386,7 +2388,37 @@ var submitLoginForm = /*#__PURE__*/function () {
   return function submitLoginForm(_x3) {
     return _ref3.apply(this, arguments);
   };
-}(); // register customer
+}(); // decrement quantity counter
+
+
+var decrement = function decrement(e) {
+  var btn = e.target.parentNode.parentElement.querySelector('button[data-action="decrement"]');
+  var target = btn.nextElementSibling;
+  var value = Number(target.value);
+
+  if (value <= 1) {
+    value = 1;
+  } else {
+    value--;
+  }
+
+  target.value = value;
+}; // increment quantity counter
+
+
+var increment = function increment(e) {
+  var btn = e.target.parentNode.parentElement.querySelector('button[data-action="decrement"]');
+  var target = btn.nextElementSibling;
+  var value = Number(target.value);
+
+  if (value < 100) {
+    value++;
+  } else {
+    value = 1;
+  }
+
+  target.value = value;
+}; // register customer
 
 
 if (registerFormEle) {
@@ -2440,7 +2472,16 @@ if (logoutEle) {
       return _ref4.apply(this, arguments);
     };
   }());
-}
+} // decrement quantity btn
+
+
+decrementButtons.forEach(function (btn) {
+  btn.addEventListener('click', decrement);
+}); // increment quantity btn
+
+incrementButtons.forEach(function (btn) {
+  btn.addEventListener('click', increment);
+});
 
 /***/ }),
 

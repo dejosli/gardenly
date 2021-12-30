@@ -88,3 +88,41 @@ section.register form,
         border-color: $primary;
     }
 }
+
+// quantity counter
+.custom-number-input {
+
+    /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+
+}
+
+.custom-number-input,
+.outline-none {
+
+    input[type='number'] {
+        border: 1px solid transparent !important;
+    }
+
+    input:focus,
+    input:focus-visible {
+        outline: none !important;
+    }
+
+    button:focus,
+    button:focus-visible {
+        outline: none !important;
+    }
+
+    outline: none !important;
+    border: 1px solid transparent !important;
+}

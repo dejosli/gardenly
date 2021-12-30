@@ -904,6 +904,14 @@ select {
   }
 }
 
+.relative {
+  position: relative;
+}
+
+.m-auto {
+  margin: auto;
+}
+
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
@@ -954,6 +962,14 @@ select {
   margin-top: 0.5rem;
 }
 
+.ml-16 {
+  margin-left: 4rem;
+}
+
+.mt-1 {
+  margin-top: 0.25rem;
+}
+
 .ml-2 {
   margin-left: 0.5rem;
 }
@@ -998,6 +1014,14 @@ select {
   height: 1rem;
 }
 
+.h-10 {
+  height: 2.5rem;
+}
+
+.h-full {
+  height: 100%;
+}
+
 .w-1\/2 {
   width: 50%;
 }
@@ -1018,6 +1042,14 @@ select {
   width: 6rem;
 }
 
+.w-3\/5 {
+  width: 60%;
+}
+
+.w-20 {
+  width: 5rem;
+}
+
 .w-2\/5 {
   width: 40%;
 }
@@ -1034,8 +1066,16 @@ select {
   flex: 1 1 0%;
 }
 
+.cursor-pointer {
+  cursor: pointer;
+}
+
 .grid-cols-4 {
   grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.flex-row {
+  flex-direction: row;
 }
 
 .items-start {
@@ -1085,6 +1125,16 @@ select {
   border-radius: 0.25rem;
 }
 
+.rounded-l {
+  border-top-left-radius: 0.25rem;
+  border-bottom-left-radius: 0.25rem;
+}
+
+.rounded-r {
+  border-top-right-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
+}
+
 .border {
   border-width: 1px;
 }
@@ -1116,6 +1166,20 @@ select {
 .bg-gray-50 {
   --tw-bg-opacity: 1;
   background-color: rgb(249 250 251 / var(--tw-bg-opacity));
+}
+
+.bg-transparent {
+  background-color: transparent;
+}
+
+.bg-gray-300 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(209 213 219 / var(--tw-bg-opacity));
+}
+
+.bg-gray-200 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(229 231 235 / var(--tw-bg-opacity));
 }
 
 .p-4 {
@@ -1238,6 +1302,14 @@ select {
   font-weight: 500;
 }
 
+.font-thin {
+  font-weight: 100;
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
 .uppercase {
   text-transform: uppercase;
 }
@@ -1262,10 +1334,30 @@ select {
   color: rgb(107 114 128 / var(--tw-text-opacity));
 }
 
+.text-gray-600 {
+  --tw-text-opacity: 1;
+  color: rgb(75 85 99 / var(--tw-text-opacity));
+}
+
+.text-gray-700 {
+  --tw-text-opacity: 1;
+  color: rgb(55 65 81 / var(--tw-text-opacity));
+}
+
+.text-orange-500 {
+  --tw-text-opacity: 1;
+  color: rgb(249 115 22 / var(--tw-text-opacity));
+}
+
 .shadow-md {
   --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.outline-none {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
 }
 
 body {
@@ -1351,8 +1443,83 @@ section.register form input:focus-visible,
   border-color: #FE5F1E;
 }
 
+.custom-number-input {
+  /* Chrome, Safari, Edge, Opera */
+  /* Firefox */
+}
+
+.custom-number-input input::-webkit-outer-spin-button,
+.custom-number-input input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.custom-number-input input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.custom-number-input,
+.outline-none {
+  outline: none !important;
+  border: 1px solid transparent !important;
+}
+
+.custom-number-input input[type=number],
+.outline-none input[type=number] {
+  border: 1px solid transparent !important;
+}
+
+.custom-number-input input:focus,
+.custom-number-input input:focus-visible,
+.outline-none input:focus,
+.outline-none input:focus-visible {
+  outline: none !important;
+}
+
+.custom-number-input button:focus,
+.custom-number-input button:focus-visible,
+.outline-none button:focus,
+.outline-none button:focus-visible {
+  outline: none !important;
+}
+
+.hover\:bg-gray-400:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(156 163 175 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-gray-300:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(209 213 219 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-gray-200:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(229 231 235 / var(--tw-bg-opacity));
+}
+
+.hover\:text-gray-700:hover {
+  --tw-text-opacity: 1;
+  color: rgb(55 65 81 / var(--tw-text-opacity));
+}
+
+.hover\:text-black:hover {
+  --tw-text-opacity: 1;
+  color: rgb(0 0 0 / var(--tw-text-opacity));
+}
+
+.hover\:text-orange-700:hover {
+  --tw-text-opacity: 1;
+  color: rgb(194 65 12 / var(--tw-text-opacity));
+}
+
 .hover\:underline:hover {
   text-decoration: underline;
+}
+
+.focus\:text-black:focus {
+  --tw-text-opacity: 1;
+  color: rgb(0 0 0 / var(--tw-text-opacity));
 }
 
 .focus\:outline-none:focus {
@@ -1368,6 +1535,31 @@ section.register form input:focus-visible,
 
 .focus\:ring-transparent:focus {
   --tw-ring-color: transparent;
+}
+
+.custom-number-input,
+.focus\:outline-none:focus {
+  outline: none !important;
+  border: 1px solid transparent !important;
+}
+
+.custom-number-input input[type=number],
+.focus\:outline-none:focus input[type=number] {
+  border: 1px solid transparent !important;
+}
+
+.custom-number-input input:focus,
+.custom-number-input input:focus-visible,
+.focus\:outline-none:focus input:focus,
+.outline-none input:focus-visible {
+  outline: none !important;
+}
+
+.custom-number-input button:focus,
+.custom-number-input button:focus-visible,
+.focus\:outline-none:focus button:focus,
+.outline-none button:focus-visible {
+  outline: none !important;
 }
 
 @media (min-width: 640px) {

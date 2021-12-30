@@ -9,6 +9,12 @@ const cartCounter = document.getElementById('cartCounter');
 const registerFormEle = document.getElementById('registerForm');
 const loginFormEle = document.getElementById('loginForm');
 const logoutEle = document.getElementById('logout');
+const decrementButtons = document.querySelectorAll(
+  `button[data-action="decrement"]`
+);
+const incrementButtons = document.querySelectorAll(
+  `button[data-action="increment"]`
+);
 
 // notification - message
 const notyMessage = function (
@@ -138,6 +144,38 @@ const submitLoginForm = async function (e) {
   }
 };
 
+// decrement quantity counter
+const decrement = function (e) {
+  const btn = e.target.parentNode.parentElement.querySelector(
+    'button[data-action="decrement"]'
+  );
+  const target = btn.nextElementSibling;
+  let value = Number(target.value);
+  if (value <= 1) {
+    value = 1;
+  } else {
+    value--;
+  }
+
+  target.value = value;
+};
+
+// increment quantity counter
+const increment = function (e) {
+  const btn = e.target.parentNode.parentElement.querySelector(
+    'button[data-action="decrement"]'
+  );
+  const target = btn.nextElementSibling;
+  let value = Number(target.value);
+  if (value < 100) {
+    value++;
+  } else {
+    value = 1;
+  }
+
+  target.value = value;
+};
+
 // register customer
 if (registerFormEle) {
   registerFormEle.addEventListener('submit', submitRegisterForm);
@@ -163,3 +201,13 @@ if (logoutEle) {
     }
   });
 }
+
+// decrement quantity btn
+decrementButtons.forEach((btn) => {
+  btn.addEventListener('click', decrement);
+});
+
+// increment quantity btn
+incrementButtons.forEach((btn) => {
+  btn.addEventListener('click', increment);
+});
