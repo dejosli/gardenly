@@ -13,9 +13,9 @@ const {
   isLoggedIn,
 } = require('../app/http/controllers/authController');
 const {
-  cartIndexController,
-  updateCartController,
   initSessionCart,
+  cartIndex,
+  updateCart,
 } = require('../app/http/controllers/customers/cartController');
 const {
   addUserValidators,
@@ -51,8 +51,8 @@ router.post(
 );
 
 // cart routes
-router.get('/cart', cartIndexController);
-router.post('/update-cart', updateCartController);
+router.get('/cart', cartIndex);
+router.post('/update-cart', updateCart);
 
 // exports
 module.exports = router;

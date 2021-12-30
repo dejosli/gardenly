@@ -25,7 +25,10 @@ const toSessionData = (mongoCart) => {
 };
 
 const toMongoData = (req) => {
-  const sessionCart = req.session.cart;
+  const sessionCart =
+    req.session.cart && req.session.cart.items
+      ? req.session.cart
+      : new SessionCart({});
   const cart = {};
   cart.userId = req.user.id;
   cart.items = [];
@@ -45,12 +48,19 @@ const toMongoData = (req) => {
   return cart;
 };
 
+// initialize session cart
+const initSessionCart = (req, res, next) => {
+  req.session.cart = new SessionCart(req.session.cart ? req.session.cart : {});
+  next();
+};
+
 // GET - cart page
-const cartIndexController = (req, res, next) => {
+const cartIndex = (req, res, next) => {
   res.status(200).render('customers/cart');
 };
 
-const updateCartController = async (req, res, next) => {
+// POST - update cart
+const updateCart = async (req, res, next) => {
   // update mongodb cart
   if (req.isAuthenticated()) {
     let cart;
@@ -128,11 +138,6 @@ const updateCartController = async (req, res, next) => {
   res.status(201).json({ cart: sessionCart });
 };
 
-const initSessionCart = (req, res, next) => {
-  req.session.cart = new SessionCart(req.session.cart ? req.session.cart : {});
-  next();
-};
-
 const loggedInUserCart = async (req, res) => {
   const sessionCart = req.session.cart;
   const userId = req.user.id;
@@ -146,23 +151,6 @@ const loggedInUserCart = async (req, res) => {
     return sessionCart;
   } catch (err) {
     return err;
-  }
-};
-
-const mergeCart1 = async (req, res) => {
-  const mongoCart = toMongoData(req); // convert session cart data to mongodb data
-  const userId = req.user.id;
-  try {
-    let userCart = await MongoCart.findOne({
-      userId,
-    });
-    if (userCart) {
-      await MongoCart.deleteOne({ userId });
-    }
-    let newCart = await MongoCart.create(mongoCart);
-    return toSessionData(newCart);
-  } catch (err) {
-    console.log(err);
   }
 };
 
@@ -225,9 +213,9 @@ const mergeCart = async (req, res) => {
 
 // exports
 module.exports = {
-  cartIndexController,
-  updateCartController,
   initSessionCart,
+  cartIndex,
+  updateCart,
   loggedInUserCart,
   mergeCart,
 };
