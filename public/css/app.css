@@ -1038,12 +1038,12 @@ select {
   width: 1rem;
 }
 
-.w-24 {
-  width: 6rem;
-}
-
 .w-3\/5 {
   width: 60%;
+}
+
+.w-24 {
+  width: 6rem;
 }
 
 .w-20 {
@@ -1438,8 +1438,8 @@ section.login form input:focus,
 section.login form input:focus-visible,
 section.register form input:focus,
 section.register form input:focus-visible,
-.shiping-info form input:focus,
-.shiping-info form input:focus-visible {
+.shipping-info form input:focus,
+.shipping-info form input:focus-visible {
   border-color: #FE5F1E;
 }
 
@@ -1456,12 +1456,6 @@ section.register form input:focus-visible,
 
 .custom-number-input input[type=number] {
   -moz-appearance: textfield;
-}
-
-.custom-number-input,
-.outline-none {
-  outline: none !important;
-  border: 1px solid transparent !important;
 }
 
 .custom-number-input input[type=number],
@@ -1503,16 +1497,6 @@ section.register form input:focus-visible,
   color: rgb(194 65 12 / var(--tw-text-opacity));
 }
 
-.hover\:text-orange-500:hover {
-  --tw-text-opacity: 1;
-  color: rgb(249 115 22 / var(--tw-text-opacity));
-}
-
-.hover\:text-orange-600:hover {
-  --tw-text-opacity: 1;
-  color: rgb(234 88 12 / var(--tw-text-opacity));
-}
-
 .hover\:underline:hover {
   text-decoration: underline;
 }
@@ -1535,12 +1519,6 @@ section.register form input:focus-visible,
 
 .focus\:ring-transparent:focus {
   --tw-ring-color: transparent;
-}
-
-.custom-number-input,
-.focus\:outline-none:focus {
-  outline: none !important;
-  border: 1px solid transparent !important;
 }
 
 .custom-number-input input[type=number],
