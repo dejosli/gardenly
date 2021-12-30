@@ -37,7 +37,7 @@ const toMongoData = (req) => {
       price: sessionCart.items[itemId].item.price,
       size: sessionCart.items[itemId].item.size,
       qty: sessionCart.items[itemId].qty,
-      price: sessionCart.items[itemId].price,
+      price: sessionCart.items[itemId].item.price,
     });
   }
   cart.totalQty = sessionCart.totalQty;
@@ -60,15 +60,13 @@ const updateCartController = async (req, res, next) => {
       let mongoCart = await MongoCart.findOne({
         userId,
       });
-
+      // cart exists for user
       if (mongoCart) {
-        //cart exists for user
         let itemIndex = mongoCart.items.findIndex(
           (item) => item.itemId == req.body._id
         );
-
+        // item exists in the cart
         if (itemIndex > -1) {
-          // item exists in the cart
           let storedItem = mongoCart.items[itemIndex];
           storedItem.qty++;
           mongoCart.totalQty++;
@@ -151,8 +149,8 @@ const loggedInUserCart = async (req, res) => {
   }
 };
 
-const mergeCart = async (req, res) => {
-  const mongoCart = toMongoData(req);
+const mergeCart1 = async (req, res) => {
+  const mongoCart = toMongoData(req); // convert session cart data to mongodb data
   const userId = req.user.id;
   try {
     let userCart = await MongoCart.findOne({
@@ -160,6 +158,63 @@ const mergeCart = async (req, res) => {
     });
     if (userCart) {
       await MongoCart.deleteOne({ userId });
+    }
+    let newCart = await MongoCart.create(mongoCart);
+    return toSessionData(newCart);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const mergeCart = async (req, res) => {
+  let mongoCart = toMongoData(req); // convert session cart data to mongodb data
+  const userId = req.user.id;
+  try {
+    let userCart = await MongoCart.findOne({
+      userId,
+    });
+    if (userCart) {
+      mongoCart.items.forEach((cartItem) => {
+        let itemIndex = userCart.items.findIndex(
+          (item) => item.itemId == cartItem.itemId
+        );
+        // item exists in the cart
+        if (itemIndex > -1) {
+          let storedItem = userCart.items[itemIndex];
+          storedItem.qty += cartItem.qty;
+          userCart.totalQty += cartItem.qty;
+          userCart.totalPrice =
+            userCart.totalPrice + cartItem.qty * storedItem.price;
+        } else {
+          // item does not exists in cart, add new-item
+          userCart.items.push({
+            itemId: cartItem.itemId,
+            name: cartItem.name,
+            image: cartItem.image,
+            price: cartItem.price,
+            size: cartItem.size,
+            qty: 1,
+          });
+          let index = userCart.items.findIndex(
+            (item) => item.itemId == cartItem.itemId
+          );
+          let storedItem = userCart.items[index];
+          storedItem.qty += cartItem.qty;
+          userCart.totalPrice =
+            userCart.totalPrice + cartItem.qty * storedItem.price;
+        }
+        //TODO:
+      });
+      // update cart
+      userCart.save((err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          userCart = result;
+        }
+      });
+      // userCart = await userCart.save();
+      return toSessionData(userCart);
     }
     let newCart = await MongoCart.create(mongoCart);
     return toSessionData(newCart);

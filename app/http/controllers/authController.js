@@ -62,7 +62,7 @@ const loginController = (req, res, next) => {
 // POST - logged out user
 const logoutController = (req, res, next) => {
   req.logout(); // logout user
-  // req.session.destroy(); // TODO: delete previous session
+  req.session.destroy(); // TODO: delete previous session
   res.status(200).json({
     success: {
       msg: 'You have been logged out',
