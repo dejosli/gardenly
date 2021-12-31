@@ -15,6 +15,7 @@ const {
 const {
   initSessionCart,
   cartIndex,
+  addToCart,
   updateCart,
 } = require('../app/http/controllers/customers/cartController');
 const {
@@ -52,6 +53,7 @@ router.post(
 
 // cart routes
 router.get('/cart', cartIndex);
+router.post('/add-to-cart', addToCart);
 router.post('/update-cart', updateCart);
 
 // exports

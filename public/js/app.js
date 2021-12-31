@@ -2204,62 +2204,100 @@ var notyMessage = function notyMessage() {
     progressBar: false,
     text: msg
   }).show();
-}; // update cart
+}; // update cart item
 
 
 var updateCart = /*#__PURE__*/function () {
-  var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee(pizza) {
-    var res;
+  var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee(itemId, qty) {
+    var res, subtotalPrice, totalPrice;
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
             _context.prev = 0;
             _context.next = 3;
-            return axios__WEBPACK_IMPORTED_MODULE_1___default().post('/update-cart', pizza);
+            return axios__WEBPACK_IMPORTED_MODULE_1___default().post('/update-cart', {
+              itemId: itemId,
+              qty: qty
+            });
 
           case 3:
             res = _context.sent;
             cartCounter.innerText = res.data.cart.totalQty;
-            notyMessage('success', 'Item added to cart'); // notification
+            subtotalPrice = res.data.cart.items[itemId].price;
+            totalPrice = res.data.cart.totalPrice;
+            return _context.abrupt("return", {
+              subtotalPrice: subtotalPrice,
+              totalPrice: totalPrice
+            });
 
-            _context.next = 12;
-            break;
-
-          case 8:
-            _context.prev = 8;
+          case 10:
+            _context.prev = 10;
             _context.t0 = _context["catch"](0);
             console.log(_context.t0);
-            notyMessage('error', 'Something went wrong'); // notification
 
-          case 12:
+          case 13:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[0, 8]]);
+    }, _callee, null, [[0, 10]]);
   }));
 
-  return function updateCart(_x) {
+  return function updateCart(_x, _x2) {
     return _ref.apply(this, arguments);
   };
 }(); // add-to-cart btn
 
 
 addToCart.forEach(function (btn) {
-  btn.addEventListener('click', function (e) {
-    e.preventDefault();
-    var pizza = JSON.parse(btn.dataset.pizza);
-    updateCart(pizza);
-  });
+  btn.addEventListener('click', /*#__PURE__*/function () {
+    var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2(e) {
+      var pizza, res;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              e.preventDefault();
+              pizza = JSON.parse(btn.dataset.pizza);
+              _context2.prev = 2;
+              _context2.next = 5;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().post('/add-to-cart', pizza);
+
+            case 5:
+              res = _context2.sent;
+              cartCounter.innerText = res.data.cart.totalQty;
+              notyMessage('success', 'Item added to cart'); // notification
+
+              _context2.next = 14;
+              break;
+
+            case 10:
+              _context2.prev = 10;
+              _context2.t0 = _context2["catch"](2);
+              console.log(_context2.t0);
+              notyMessage('error', 'Something went wrong'); // notification
+
+            case 14:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2, null, [[2, 10]]);
+    }));
+
+    return function (_x3) {
+      return _ref2.apply(this, arguments);
+    };
+  }());
 }); // submit register form
 
 var submitRegisterForm = /*#__PURE__*/function () {
-  var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2(e) {
+  var _ref3 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3(e) {
     var username, email, password, registerFormData, res, errors, timeout;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
       while (1) {
-        switch (_context2.prev = _context2.next) {
+        switch (_context3.prev = _context3.next) {
           case 0:
             e.preventDefault(); // get form input value
 
@@ -2272,8 +2310,8 @@ var submitRegisterForm = /*#__PURE__*/function () {
               email: email,
               password: password
             });
-            _context2.prev = 5;
-            _context2.next = 8;
+            _context3.prev = 5;
+            _context3.next = 8;
             return axios__WEBPACK_IMPORTED_MODULE_1___default().post('/register', registerFormData, {
               headers: {
                 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -2281,7 +2319,7 @@ var submitRegisterForm = /*#__PURE__*/function () {
             });
 
           case 8:
-            res = _context2.sent;
+            res = _context3.sent;
 
             // if success - redirect to success url
             if (res.data.success) {
@@ -2307,34 +2345,34 @@ var submitRegisterForm = /*#__PURE__*/function () {
               notyMessage('error', 'Password should contain at least 1 lowercase, 1 uppercase, 1 number & 1 symbol', timeout);
             }
 
-            _context2.next = 20;
+            _context3.next = 20;
             break;
 
           case 17:
-            _context2.prev = 17;
-            _context2.t0 = _context2["catch"](5);
-            console.log(_context2.t0);
+            _context3.prev = 17;
+            _context3.t0 = _context3["catch"](5);
+            console.log(_context3.t0);
 
           case 20:
           case "end":
-            return _context2.stop();
+            return _context3.stop();
         }
       }
-    }, _callee2, null, [[5, 17]]);
+    }, _callee3, null, [[5, 17]]);
   }));
 
-  return function submitRegisterForm(_x2) {
-    return _ref2.apply(this, arguments);
+  return function submitRegisterForm(_x4) {
+    return _ref3.apply(this, arguments);
   };
 }(); // submit login form
 
 
 var submitLoginForm = /*#__PURE__*/function () {
-  var _ref3 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3(e) {
+  var _ref4 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4(e) {
     var email, password, loginFormData, res, error, timeout;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
       while (1) {
-        switch (_context3.prev = _context3.next) {
+        switch (_context4.prev = _context4.next) {
           case 0:
             e.preventDefault(); // get form input value
 
@@ -2345,8 +2383,8 @@ var submitLoginForm = /*#__PURE__*/function () {
               email: email,
               password: password
             });
-            _context3.prev = 4;
-            _context3.next = 7;
+            _context4.prev = 4;
+            _context4.next = 7;
             return axios__WEBPACK_IMPORTED_MODULE_1___default().post('/login', loginFormData, {
               headers: {
                 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -2354,7 +2392,7 @@ var submitLoginForm = /*#__PURE__*/function () {
             });
 
           case 7:
-            res = _context3.sent;
+            res = _context4.sent;
 
             // if success - redirect to success url
             if (res.data.success) {
@@ -2369,56 +2407,118 @@ var submitLoginForm = /*#__PURE__*/function () {
               notyMessage('error', error.msg, timeout);
             }
 
-            _context3.next = 17;
+            _context4.next = 17;
             break;
 
           case 14:
-            _context3.prev = 14;
-            _context3.t0 = _context3["catch"](4);
-            console.log(_context3.t0);
+            _context4.prev = 14;
+            _context4.t0 = _context4["catch"](4);
+            console.log(_context4.t0);
 
           case 17:
           case "end":
-            return _context3.stop();
+            return _context4.stop();
         }
       }
-    }, _callee3, null, [[4, 14]]);
+    }, _callee4, null, [[4, 14]]);
   }));
 
-  return function submitLoginForm(_x3) {
-    return _ref3.apply(this, arguments);
+  return function submitLoginForm(_x5) {
+    return _ref4.apply(this, arguments);
   };
 }(); // decrement quantity counter
 
 
-var decrement = function decrement(e) {
-  var btn = e.target.parentNode.parentElement.querySelector('button[data-action="decrement"]');
-  var target = btn.nextElementSibling;
-  var value = Number(target.value);
+var decrement = /*#__PURE__*/function () {
+  var _ref5 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5(e) {
+    var btn, itemId, target, subtotalPriceEle, totalPriceEle, qty, _yield$updateCart, subtotalPrice, totalPrice;
 
-  if (value <= 1) {
-    value = 1;
-  } else {
-    value--;
-  }
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
+      while (1) {
+        switch (_context5.prev = _context5.next) {
+          case 0:
+            btn = e.target.parentNode.parentElement.querySelector('button[data-action="decrement"]');
+            itemId = btn.parentNode.parentElement.parentElement.dataset.pizzaId;
+            target = btn.nextElementSibling;
+            subtotalPriceEle = btn.parentNode.parentElement.parentElement.querySelector('.subtotal-price');
+            totalPriceEle = document.getElementById('total-price');
+            qty = Number(target.value);
 
-  target.value = value;
-}; // increment quantity counter
+            if (qty <= 1) {
+              qty = 1;
+            } else {
+              qty--;
+            }
+
+            target.value = qty;
+            _context5.next = 10;
+            return updateCart(itemId, qty);
+
+          case 10:
+            _yield$updateCart = _context5.sent;
+            subtotalPrice = _yield$updateCart.subtotalPrice;
+            totalPrice = _yield$updateCart.totalPrice;
+            subtotalPriceEle.innerText = "\u09F3".concat(subtotalPrice);
+            totalPriceEle.innerText = "\u09F3".concat(totalPrice);
+
+          case 15:
+          case "end":
+            return _context5.stop();
+        }
+      }
+    }, _callee5);
+  }));
+
+  return function decrement(_x6) {
+    return _ref5.apply(this, arguments);
+  };
+}(); // increment quantity counter
 
 
-var increment = function increment(e) {
-  var btn = e.target.parentNode.parentElement.querySelector('button[data-action="decrement"]');
-  var target = btn.nextElementSibling;
-  var value = Number(target.value);
+var increment = /*#__PURE__*/function () {
+  var _ref6 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee6(e) {
+    var btn, itemId, target, subtotalPriceEle, totalPriceEle, qty, _yield$updateCart2, subtotalPrice, totalPrice;
 
-  if (value < 100) {
-    value++;
-  } else {
-    value = 1;
-  }
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee6$(_context6) {
+      while (1) {
+        switch (_context6.prev = _context6.next) {
+          case 0:
+            btn = e.target.parentNode.parentElement.querySelector('button[data-action="decrement"]');
+            itemId = btn.parentNode.parentElement.parentElement.dataset.pizzaId;
+            target = btn.nextElementSibling;
+            subtotalPriceEle = btn.parentNode.parentElement.parentElement.querySelector('.subtotal-price');
+            totalPriceEle = document.getElementById('total-price');
+            qty = Number(target.value);
 
-  target.value = value;
-}; // register customer
+            if (qty < 100) {
+              qty++;
+            } else {
+              qty = 1;
+            }
+
+            target.value = qty;
+            _context6.next = 10;
+            return updateCart(itemId, qty);
+
+          case 10:
+            _yield$updateCart2 = _context6.sent;
+            subtotalPrice = _yield$updateCart2.subtotalPrice;
+            totalPrice = _yield$updateCart2.totalPrice;
+            subtotalPriceEle.innerText = "\u09F3".concat(subtotalPrice);
+            totalPriceEle.innerText = "\u09F3".concat(totalPrice);
+
+          case 15:
+          case "end":
+            return _context6.stop();
+        }
+      }
+    }, _callee6);
+  }));
+
+  return function increment(_x7) {
+    return _ref6.apply(this, arguments);
+  };
+}(); // register customer
 
 
 if (registerFormEle) {
@@ -2433,43 +2533,43 @@ if (loginFormEle) {
 
 if (logoutEle) {
   logoutEle.addEventListener('click', /*#__PURE__*/function () {
-    var _ref4 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4(e) {
+    var _ref7 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee7(e) {
       var res;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee7$(_context7) {
         while (1) {
-          switch (_context4.prev = _context4.next) {
+          switch (_context7.prev = _context7.next) {
             case 0:
               e.preventDefault();
-              _context4.prev = 1;
-              _context4.next = 4;
+              _context7.prev = 1;
+              _context7.next = 4;
               return axios__WEBPACK_IMPORTED_MODULE_1___default().post('/logout');
 
             case 4:
-              res = _context4.sent;
+              res = _context7.sent;
 
               // if success - redirect to success url
               if (res.data.success) {
                 location.replace(res.data.success.redirectUrl);
               }
 
-              _context4.next = 11;
+              _context7.next = 11;
               break;
 
             case 8:
-              _context4.prev = 8;
-              _context4.t0 = _context4["catch"](1);
-              console.log(_context4.t0);
+              _context7.prev = 8;
+              _context7.t0 = _context7["catch"](1);
+              console.log(_context7.t0);
 
             case 11:
             case "end":
-              return _context4.stop();
+              return _context7.stop();
           }
         }
-      }, _callee4, null, [[1, 8]]);
+      }, _callee7, null, [[1, 8]]);
     }));
 
-    return function (_x4) {
-      return _ref4.apply(this, arguments);
+    return function (_x8) {
+      return _ref7.apply(this, arguments);
     };
   }());
 } // decrement quantity btn

@@ -1,7 +1,7 @@
 // external imports
 const mongoose = require('mongoose');
 
-const CartSchema = new mongoose.Schema(
+const cartSchema = new mongoose.Schema(
   {
     userId: {
       type: mongoose.Schema.Types.ObjectId,
@@ -36,5 +36,23 @@ const CartSchema = new mongoose.Schema(
   }
 );
 
+// methods
+cartSchema.methods.calTotalQty = function () {
+  console.log(this);
+  let qty = 0;
+  this.items.forEach((item) => {
+    qty = qty + item.qty;
+  });
+  return qty;
+};
+
+cartSchema.methods.calTotalPrice = function () {
+  let price = 0;
+  this.items.forEach((item) => {
+    price = price + item.qty * item.price;
+  });
+  return price;
+};
+
 // exports
-module.exports = mongoose.model('Cart', CartSchema);
+module.exports = mongoose.model('Cart', cartSchema);

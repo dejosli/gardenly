@@ -31,24 +31,32 @@ const notyMessage = function (
   }).show();
 };
 
-// update cart
-const updateCart = async function (pizza) {
+// update cart item
+const updateCart = async function (itemId, qty) {
   try {
-    const res = await axios.post('/update-cart', pizza);
+    const res = await axios.post('/update-cart', { itemId, qty });
     cartCounter.innerText = res.data.cart.totalQty;
-    notyMessage('success', 'Item added to cart'); // notification
+    const subtotalPrice = res.data.cart.items[itemId].price;
+    const totalPrice = res.data.cart.totalPrice;
+    return { subtotalPrice, totalPrice };
   } catch (err) {
     console.log(err);
-    notyMessage('error', 'Something went wrong'); // notification
   }
 };
 
 // add-to-cart btn
 addToCart.forEach((btn) => {
-  btn.addEventListener('click', (e) => {
+  btn.addEventListener('click', async (e) => {
     e.preventDefault();
     let pizza = JSON.parse(btn.dataset.pizza);
-    updateCart(pizza);
+    try {
+      const res = await axios.post('/add-to-cart', pizza);
+      cartCounter.innerText = res.data.cart.totalQty;
+      notyMessage('success', 'Item added to cart'); // notification
+    } catch (err) {
+      console.log(err);
+      notyMessage('error', 'Something went wrong'); // notification
+    }
   });
 });
 
@@ -145,35 +153,47 @@ const submitLoginForm = async function (e) {
 };
 
 // decrement quantity counter
-const decrement = function (e) {
+const decrement = async function (e) {
   const btn = e.target.parentNode.parentElement.querySelector(
     'button[data-action="decrement"]'
   );
+  const itemId = btn.parentNode.parentElement.parentElement.dataset.pizzaId;
   const target = btn.nextElementSibling;
-  let value = Number(target.value);
-  if (value <= 1) {
-    value = 1;
+  const subtotalPriceEle =
+    btn.parentNode.parentElement.parentElement.querySelector('.subtotal-price');
+  const totalPriceEle = document.getElementById('total-price');
+  let qty = Number(target.value);
+  if (qty <= 1) {
+    qty = 1;
   } else {
-    value--;
+    qty--;
   }
-
-  target.value = value;
+  target.value = qty;
+  const { subtotalPrice, totalPrice } = await updateCart(itemId, qty);
+  subtotalPriceEle.innerText = `৳${subtotalPrice}`;
+  totalPriceEle.innerText = `৳${totalPrice}`;
 };
 
 // increment quantity counter
-const increment = function (e) {
+const increment = async function (e) {
   const btn = e.target.parentNode.parentElement.querySelector(
     'button[data-action="decrement"]'
   );
+  const itemId = btn.parentNode.parentElement.parentElement.dataset.pizzaId;
   const target = btn.nextElementSibling;
-  let value = Number(target.value);
-  if (value < 100) {
-    value++;
+  const subtotalPriceEle =
+    btn.parentNode.parentElement.parentElement.querySelector('.subtotal-price');
+  const totalPriceEle = document.getElementById('total-price');
+  let qty = Number(target.value);
+  if (qty < 100) {
+    qty++;
   } else {
-    value = 1;
+    qty = 1;
   }
-
-  target.value = value;
+  target.value = qty;
+  const { subtotalPrice, totalPrice } = await updateCart(itemId, qty);
+  subtotalPriceEle.innerText = `৳${subtotalPrice}`;
+  totalPriceEle.innerText = `৳${totalPrice}`;
 };
 
 // register customer

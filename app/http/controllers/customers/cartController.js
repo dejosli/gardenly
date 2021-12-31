@@ -16,7 +16,7 @@ const toSessionData = (mongoCart) => {
         size: item.size,
       },
       qty: item.qty,
-      price: item.price,
+      price: item.qty * item.price,
     };
   });
   cart.totalQty = mongoCart.totalQty;
@@ -59,8 +59,8 @@ const cartIndex = (req, res, next) => {
   res.status(200).render('customers/cart');
 };
 
-// POST - update cart
-const updateCart = async (req, res, next) => {
+// POST - add to cart
+const addToCart = async (req, res, next) => {
   // update mongodb cart
   if (req.isAuthenticated()) {
     let cart;
@@ -98,7 +98,6 @@ const updateCart = async (req, res, next) => {
           mongoCart.totalQty++;
           mongoCart.totalPrice += storedItem.price;
         }
-
         // update cart
         mongoCart = await mongoCart.save();
         cart = toSessionData(mongoCart);
@@ -136,6 +135,51 @@ const updateCart = async (req, res, next) => {
   sessionCart.add(req.body, req.body._id);
   req.session.cart = sessionCart;
   res.status(201).json({ cart: sessionCart });
+};
+
+// POST - update cart item
+const updateCart = async (req, res, next) => {
+  const { itemId, qty: newQty } = req.body;
+  if (req.isAuthenticated()) {
+    const userId = req.user.id;
+    try {
+      let mongoCart = await MongoCart.findOne({
+        userId,
+      });
+      // cart exists for user
+      if (mongoCart) {
+        let itemIndex = mongoCart.items.findIndex(
+          (item) => item.itemId == itemId
+        );
+        // item exists in the cart
+        if (itemIndex > -1) {
+          let storedItem = mongoCart.items[itemIndex];
+          storedItem.qty = newQty;
+          mongoCart.totalQty = mongoCart.calTotalQty();
+          mongoCart.totalPrice = mongoCart.calTotalPrice();
+        }
+        // update cart
+        mongoCart = await mongoCart.save();
+        req.session.cart = toSessionData(mongoCart);
+        return res.status(201).json({
+          message: 'Item updated successfully',
+          cart: toSessionData(mongoCart),
+        });
+      }
+      return res.status(500).json({ error: 'Item updated failed' });
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json({ error: 'Something went wrong' });
+    }
+  }
+  // update session cart
+  const sessionCart = new SessionCart(req.session.cart);
+  sessionCart.update(itemId, newQty);
+  req.session.cart = sessionCart;
+  console.log(sessionCart);
+  res
+    .status(201)
+    .json({ message: 'Item updated successfully', cart: sessionCart });
 };
 
 const loggedInUserCart = async (req, res) => {
@@ -215,6 +259,7 @@ const mergeCart = async (req, res) => {
 module.exports = {
   initSessionCart,
   cartIndex,
+  addToCart,
   updateCart,
   loggedInUserCart,
   mergeCart,
