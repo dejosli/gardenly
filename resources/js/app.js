@@ -6,6 +6,7 @@ import qs from 'qs';
 // variables
 const addToCart = document.querySelectorAll('.add-to-cart');
 const cartCounter = document.getElementById('cartCounter');
+const totalPriceEle = document.getElementById('total-price');
 const registerFormEle = document.getElementById('registerForm');
 const loginFormEle = document.getElementById('loginForm');
 const logoutEle = document.getElementById('logout');
@@ -15,6 +16,7 @@ const decrementButtons = document.querySelectorAll(
 const incrementButtons = document.querySelectorAll(
   `button[data-action="increment"]`
 );
+const deleteItemButtons = document.querySelectorAll('.delete-item');
 
 // notification - message
 const notyMessage = function (
@@ -29,19 +31,6 @@ const notyMessage = function (
     progressBar: false,
     text: msg,
   }).show();
-};
-
-// update cart item
-const updateCart = async function (itemId, qty) {
-  try {
-    const res = await axios.post('/update-cart', { itemId, qty });
-    cartCounter.innerText = res.data.cart.totalQty;
-    const subtotalPrice = res.data.cart.items[itemId].price;
-    const totalPrice = res.data.cart.totalPrice;
-    return { subtotalPrice, totalPrice };
-  } catch (err) {
-    console.log(err);
-  }
 };
 
 // add-to-cart btn
@@ -59,6 +48,42 @@ addToCart.forEach((btn) => {
     }
   });
 });
+
+// update cart item
+const updateCart = async function (itemId, qty) {
+  try {
+    const res = await axios.put('/update-cart', { itemId, qty });
+    const subtotalPrice = res.data.cart.items[itemId].price;
+    const totalPrice = res.data.cart.totalPrice;
+    cartCounter.innerText = res.data.cart.totalQty;
+    return { subtotalPrice, totalPrice };
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const deleteCartItemUI = (event, response) => {
+  // if there is no item in cart
+  if (!response.data.cart.totalQty) {
+    window.location.href = window.location.href; // refresh current page
+    return;
+  }
+  const cartItemEle = event.target.parentElement;
+  cartItemEle.remove();
+  cartCounter.innerText = response.data.cart.totalQty;
+  totalPriceEle.innerText = `৳${response.data.cart.totalPrice}`;
+};
+
+// delete item
+const deleteCartItem = async function (e) {
+  const itemId = e.target.parentElement.dataset.pizzaId;
+  try {
+    const res = await axios.delete(`/delete-cart-item/${itemId}`);
+    deleteCartItemUI(e, res); // (event, response)
+  } catch (err) {
+    console.log(err);
+  }
+};
 
 // submit register form
 const submitRegisterForm = async function (e) {
@@ -161,7 +186,6 @@ const decrement = async function (e) {
   const target = btn.nextElementSibling;
   const subtotalPriceEle =
     btn.parentNode.parentElement.parentElement.querySelector('.subtotal-price');
-  const totalPriceEle = document.getElementById('total-price');
   let qty = Number(target.value);
   if (qty <= 1) {
     qty = 1;
@@ -183,7 +207,6 @@ const increment = async function (e) {
   const target = btn.nextElementSibling;
   const subtotalPriceEle =
     btn.parentNode.parentElement.parentElement.querySelector('.subtotal-price');
-  const totalPriceEle = document.getElementById('total-price');
   let qty = Number(target.value);
   if (qty < 100) {
     qty++;
@@ -230,4 +253,9 @@ decrementButtons.forEach((btn) => {
 // increment quantity btn
 incrementButtons.forEach((btn) => {
   btn.addEventListener('click', increment);
+});
+
+// delete cart item btn
+deleteItemButtons.forEach((btn) => {
+  btn.addEventListener('click', deleteCartItem);
 });

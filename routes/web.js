@@ -17,6 +17,7 @@ const {
   cartIndex,
   addToCart,
   updateCart,
+  deleteCartItem,
 } = require('../app/http/controllers/customers/cartController');
 const {
   addUserValidators,
@@ -54,7 +55,8 @@ router.post(
 // cart routes
 router.get('/cart', cartIndex);
 router.post('/add-to-cart', addToCart);
-router.post('/update-cart', updateCart);
+router.put('/update-cart', updateCart);
+router.delete('/delete-cart-item/:id', deleteCartItem);
 
 // exports
 module.exports = router;

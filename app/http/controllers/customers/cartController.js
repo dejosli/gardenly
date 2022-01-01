@@ -137,7 +137,7 @@ const addToCart = async (req, res, next) => {
   res.status(201).json({ cart: sessionCart });
 };
 
-// POST - update cart item
+// PUT - update cart item
 const updateCart = async (req, res, next) => {
   const { itemId, qty: newQty } = req.body;
   if (req.isAuthenticated()) {
@@ -176,10 +176,52 @@ const updateCart = async (req, res, next) => {
   const sessionCart = new SessionCart(req.session.cart);
   sessionCart.update(itemId, newQty);
   req.session.cart = sessionCart;
-  console.log(sessionCart);
   res
     .status(201)
     .json({ message: 'Item updated successfully', cart: sessionCart });
+};
+
+// DELETE -  delete item from cart
+const deleteCartItem = async (req, res, next) => {
+  const itemId = req.params.id;
+  if (req.isAuthenticated()) {
+    const userId = req.user.id;
+    try {
+      let mongoCart = await MongoCart.findOne({
+        userId,
+      });
+      // cart exists for user
+      if (mongoCart) {
+        let itemIndex = mongoCart.items.findIndex(
+          (item) => item.itemId == itemId
+        );
+        // item exists in the cart
+        if (itemIndex > -1) {
+          mongoCart.items.splice(itemIndex, 1); // delete item from cart
+          mongoCart.totalQty = mongoCart.calTotalQty();
+          mongoCart.totalPrice = mongoCart.calTotalPrice();
+        }
+        // update cart
+        mongoCart = await mongoCart.save();
+        req.session.cart = toSessionData(mongoCart);
+        return res.status(201).json({
+          message: 'Item deleted successfully',
+          cart: toSessionData(mongoCart),
+        });
+      }
+      return res.status(500).json({ error: 'Item deletion failed' });
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json({ error: 'Something went wrong' });
+    }
+  }
+  // update session cart
+  const sessionCart = new SessionCart(req.session.cart);
+  sessionCart.remove(itemId);
+  req.session.cart = sessionCart;
+  res
+    .status(201)
+    .json({ message: 'Item deleted successfully', cart: sessionCart });
 };
 
 const loggedInUserCart = async (req, res) => {
@@ -261,6 +303,7 @@ module.exports = {
   cartIndex,
   addToCart,
   updateCart,
+  deleteCartItem,
   loggedInUserCart,
   mergeCart,
 };

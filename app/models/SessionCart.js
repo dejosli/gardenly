@@ -26,6 +26,12 @@ module.exports = class Cart {
     this.totalQty = this.calTotalQty();
     this.totalPrice = this.calTotalPrice();
   }
+  // remove item form cart
+  remove(id) {
+    delete this.items[id];
+    this.totalQty = this.calTotalQty();
+    this.totalPrice = this.calTotalPrice();
+  }
   // calculate total quantity
   calTotalQty() {
     let qty = 0;
