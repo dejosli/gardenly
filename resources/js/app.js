@@ -17,6 +17,7 @@ const incrementButtons = document.querySelectorAll(
   `button[data-action="increment"]`
 );
 const deleteItemButtons = document.querySelectorAll('.delete-item');
+const orderFormEle = document.getElementById('order-form');
 
 // notification - message
 const notyMessage = function (
@@ -219,6 +220,45 @@ const increment = async function (e) {
   totalPriceEle.innerText = `৳${totalPrice}`;
 };
 
+// order submit process
+const orderSubmit = async function (e) {
+  e.preventDefault();
+
+  // get input values
+  const mobile = orderFormEle.elements['mobile'].value;
+  const address = orderFormEle.elements['address'].value;
+
+  const orderFormData = qs.stringify({
+    mobile: `+88${mobile}`,
+    address,
+  });
+
+  try {
+    const res = await axios.post('/orders', orderFormData);
+    // if success - redirect to success url
+    if (res.data.success) {
+      return location.replace(res.data.success.redirectUrl);
+    }
+    // if error - show notification
+    const errors = res.data.errors;
+    const timeout = 2500;
+    if (errors.mobile) {
+      notyMessage(
+        'error',
+        'Must be a valid Bangladeshi mobile number',
+        timeout
+      );
+    }
+    if (errors.address) {
+      notyMessage('error', 'Shipping address is required', timeout);
+    }
+  } catch (err) {
+    if (err.response) {
+      notyMessage('error', err.response.data.error.message, 2500);
+    }
+  }
+};
+
 // register customer
 if (registerFormEle) {
   registerFormEle.addEventListener('submit', submitRegisterForm);
@@ -259,3 +299,8 @@ incrementButtons.forEach((btn) => {
 deleteItemButtons.forEach((btn) => {
   btn.addEventListener('click', deleteCartItem);
 });
+
+// order submit
+if (orderFormEle) {
+  orderFormEle.addEventListener('submit', orderSubmit);
+}

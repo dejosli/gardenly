@@ -986,6 +986,10 @@ select {
   margin-bottom: 3rem;
 }
 
+.mr-2 {
+  margin-right: 0.5rem;
+}
+
 .block {
   display: block;
 }
@@ -996,6 +1000,10 @@ select {
 
 .flex {
   display: flex;
+}
+
+.table {
+  display: table;
 }
 
 .grid {
@@ -1064,6 +1072,10 @@ select {
 
 .flex-1 {
   flex: 1 1 0%;
+}
+
+.table-auto {
+  table-layout: auto;
 }
 
 .cursor-pointer {
@@ -1182,6 +1194,15 @@ select {
   background-color: rgb(229 231 235 / var(--tw-bg-opacity));
 }
 
+.bg-green-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(34 197 94 / var(--tw-bg-opacity));
+}
+
+.fill-current {
+  fill: currentColor;
+}
+
 .p-4 {
   padding: 1rem;
 }
@@ -1239,6 +1260,11 @@ select {
   padding-bottom: 0.625rem;
 }
 
+.py-3 {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
 .pr-2 {
   padding-right: 0.5rem;
 }
@@ -1249,6 +1275,14 @@ select {
 
 .pb-4 {
   padding-bottom: 1rem;
+}
+
+.pt-12 {
+  padding-top: 3rem;
+}
+
+.text-left {
+  text-align: left;
 }
 
 .text-center {
@@ -1475,6 +1509,14 @@ section.register form input:focus-visible,
 .outline-none button:focus,
 .outline-none button:focus-visible {
   outline: none !important;
+}
+
+.link {
+  color: #FE5F1E;
+}
+
+.link:hover {
+  color: #b23301;
 }
 
 .hover\:bg-gray-400:hover {

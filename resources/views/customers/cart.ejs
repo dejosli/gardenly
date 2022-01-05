@@ -111,7 +111,7 @@
       </div>
       <% if (user) { %>
       <div class="mt-12 shipping-info">
-        <form class="">
+        <form id="order-form" method="POST" action="/orders">
           <input
             class="
               border border-gray-400
@@ -122,7 +122,8 @@
               focus:outline-none focus:ring-transparent
             "
             type="text"
-            placeholder="Mobile Number"
+            name="mobile"
+            placeholder="Mobile number"
           />
           <input
             class="
@@ -133,7 +134,8 @@
               focus:outline-none focus:ring-transparent
             "
             type="text"
-            placeholder="Address"
+            name="address"
+            placeholder="Shipping address"
           />
 
           <div>

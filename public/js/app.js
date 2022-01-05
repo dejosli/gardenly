@@ -2193,7 +2193,8 @@ var loginFormEle = document.getElementById('loginForm');
 var logoutEle = document.getElementById('logout');
 var decrementButtons = document.querySelectorAll("button[data-action=\"decrement\"]");
 var incrementButtons = document.querySelectorAll("button[data-action=\"increment\"]");
-var deleteItemButtons = document.querySelectorAll('.delete-item'); // notification - message
+var deleteItemButtons = document.querySelectorAll('.delete-item');
+var orderFormEle = document.getElementById('order-form'); // notification - message
 
 var notyMessage = function notyMessage() {
   var msgType = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'warning';
@@ -2570,6 +2571,73 @@ var increment = /*#__PURE__*/function () {
   return function increment(_x8) {
     return _ref7.apply(this, arguments);
   };
+}(); // order submit process
+
+
+var orderSubmit = /*#__PURE__*/function () {
+  var _ref8 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee8(e) {
+    var mobile, address, orderFormData, res, errors, timeout;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee8$(_context8) {
+      while (1) {
+        switch (_context8.prev = _context8.next) {
+          case 0:
+            e.preventDefault(); // get input values
+
+            mobile = orderFormEle.elements['mobile'].value;
+            address = orderFormEle.elements['address'].value;
+            orderFormData = qs__WEBPACK_IMPORTED_MODULE_3___default().stringify({
+              mobile: "+88".concat(mobile),
+              address: address
+            });
+            _context8.prev = 4;
+            _context8.next = 7;
+            return axios__WEBPACK_IMPORTED_MODULE_1___default().post('/orders', orderFormData);
+
+          case 7:
+            res = _context8.sent;
+
+            if (!res.data.success) {
+              _context8.next = 10;
+              break;
+            }
+
+            return _context8.abrupt("return", location.replace(res.data.success.redirectUrl));
+
+          case 10:
+            // if error - show notification
+            errors = res.data.errors;
+            timeout = 2500;
+
+            if (errors.mobile) {
+              notyMessage('error', 'Must be a valid Bangladeshi mobile number', timeout);
+            }
+
+            if (errors.address) {
+              notyMessage('error', 'Shipping address is required', timeout);
+            }
+
+            _context8.next = 19;
+            break;
+
+          case 16:
+            _context8.prev = 16;
+            _context8.t0 = _context8["catch"](4);
+
+            if (_context8.t0.response) {
+              notyMessage('error', _context8.t0.response.data.error.message, 2500);
+            }
+
+          case 19:
+          case "end":
+            return _context8.stop();
+        }
+      }
+    }, _callee8, null, [[4, 16]]);
+  }));
+
+  return function orderSubmit(_x9) {
+    return _ref8.apply(this, arguments);
+  };
 }(); // register customer
 
 
@@ -2585,43 +2653,43 @@ if (loginFormEle) {
 
 if (logoutEle) {
   logoutEle.addEventListener('click', /*#__PURE__*/function () {
-    var _ref8 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee8(e) {
+    var _ref9 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee9(e) {
       var res;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee8$(_context8) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee9$(_context9) {
         while (1) {
-          switch (_context8.prev = _context8.next) {
+          switch (_context9.prev = _context9.next) {
             case 0:
               e.preventDefault();
-              _context8.prev = 1;
-              _context8.next = 4;
+              _context9.prev = 1;
+              _context9.next = 4;
               return axios__WEBPACK_IMPORTED_MODULE_1___default().post('/logout');
 
             case 4:
-              res = _context8.sent;
+              res = _context9.sent;
 
               // if success - redirect to success url
               if (res.data.success) {
                 location.replace(res.data.success.redirectUrl);
               }
 
-              _context8.next = 11;
+              _context9.next = 11;
               break;
 
             case 8:
-              _context8.prev = 8;
-              _context8.t0 = _context8["catch"](1);
-              console.log(_context8.t0);
+              _context9.prev = 8;
+              _context9.t0 = _context9["catch"](1);
+              console.log(_context9.t0);
 
             case 11:
             case "end":
-              return _context8.stop();
+              return _context9.stop();
           }
         }
-      }, _callee8, null, [[1, 8]]);
+      }, _callee9, null, [[1, 8]]);
     }));
 
-    return function (_x9) {
-      return _ref8.apply(this, arguments);
+    return function (_x10) {
+      return _ref9.apply(this, arguments);
     };
   }());
 } // decrement quantity btn
@@ -2637,7 +2705,11 @@ incrementButtons.forEach(function (btn) {
 
 deleteItemButtons.forEach(function (btn) {
   btn.addEventListener('click', deleteCartItem);
-});
+}); // order submit
+
+if (orderFormEle) {
+  orderFormEle.addEventListener('submit', orderSubmit);
+}
 
 /***/ }),
 

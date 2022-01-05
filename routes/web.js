@@ -3,6 +3,19 @@ const express = require('express');
 const router = express.Router();
 
 // internal imports
+const {
+  addUserValidators,
+  addUserValidationHandler,
+} = require('../app/http/middleware/auth/userValidators');
+const {
+  doLoginValidators,
+  doLoginValidationHandler,
+} = require('../app/http/middleware/auth/loginValidators');
+const {
+  doOrderInfoValidators,
+  doOrderInfoValidationHandler,
+} = require('../app/http/middleware/customers/orderInfoValidators');
+
 const { indexController } = require('../app/http/controllers/homeController');
 const {
   getLoginController,
@@ -20,13 +33,9 @@ const {
   deleteCartItem,
 } = require('../app/http/controllers/customers/cartController');
 const {
-  addUserValidators,
-  addUserValidationHandler,
-} = require('../app/http/middleware/auth/userValidators');
-const {
-  doLoginValidators,
-  doLoginValidationHandler,
-} = require('../app/http/middleware/auth/loginValidators');
+  orderIndex,
+  orderStore,
+} = require('../app/http/controllers/customers/orderController');
 
 // index routes
 router.get('/', initSessionCart, indexController);
@@ -57,6 +66,16 @@ router.get('/cart', cartIndex);
 router.post('/add-to-cart', addToCart);
 router.put('/update-cart', updateCart);
 router.delete('/delete-cart-item/:id', deleteCartItem);
+
+// write customer routes here
+// order routes
+router.post(
+  '/orders',
+  doOrderInfoValidators,
+  doOrderInfoValidationHandler,
+  orderStore
+);
+router.get('/customer/orders', orderIndex);
 
 // exports
 module.exports = router;

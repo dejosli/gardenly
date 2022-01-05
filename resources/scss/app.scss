@@ -123,3 +123,11 @@ section.register form,
         outline: none !important;
     }
 }
+
+.link {
+    color: $primary;
+
+    &:hover {
+        color: $primary-hover;
+    }
+}
