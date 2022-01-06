@@ -42,5 +42,6 @@
 [+] Order tracker
     [+] Socket connection
         - dependancies socket.io
-[ ] Build project for deployment
-[ ] Deploy project on live server
+[+] Add security middleware  
+[+] Build project for deployment
+[+] Deploy project on live server
