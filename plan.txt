@@ -35,7 +35,7 @@
 [+] Create Order controller and link it in server.js
 [+] Create Orders view with table for customer and admin
 [+] Place order functionality
-[+] Show all my orders on custormer orders page
+[+] Show all my orders on customer orders page
 [+] Show orders on admin orders page
 [+] Change order status
 [+] Create Orders single page with status

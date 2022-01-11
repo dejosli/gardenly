@@ -1,10 +1,10 @@
 // external imports
 require('dotenv').config();
+const http = require('http');
 const path = require('path');
 const compression = require('compression');
 const express = require('express');
 const mongoose = require('mongoose');
-const morgan = require('morgan');
 const helmet = require('helmet');
 const session = require('express-session');
 const flash = require('express-flash');
@@ -14,6 +14,10 @@ const cookieParser = require('cookie-parser');
 const expressLayouts = require('express-ejs-layouts');
 
 // internal imports
+const {
+  logger,
+  morganMiddleware,
+} = require('./app/http/middleware/common/logger');
 const {
   notFoundHandler,
   errorHandler,
@@ -26,7 +30,7 @@ const {
   initDeserializeUser,
 } = require('./app/config/passport');
 
-// init express app
+// create express app
 const app = express();
 
 // init helmet
@@ -57,10 +61,8 @@ app.use(
   })
 );
 
-// logger - morgan
-const loggerFormat =
-  process.env.NODE_ENV === 'development' ? 'dev' : 'combined';
-app.use(morgan(loggerFormat));
+// apply morgan middleware
+app.use(morganMiddleware);
 
 // db connection - mongodb
 mongoose
@@ -69,18 +71,18 @@ mongoose
     useUnifiedTopology: true,
   })
   .then(() => {
-    console.log('Database Connected...');
+    logger.debug('MongoDB Connection Established');
   })
   .catch((err) => {
     if (process.env.NODE_ENV === 'development') {
-      console.log(err);
+      logger.debug(err);
     }
-    console.log('Database Connection Failed...');
+    logger.debug('MongoDB Connection Failed');
   });
 
 // request parsers
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: '1kb' }));
+app.use(express.urlencoded({ extended: true, limit: '1kb' }));
 
 // parse cookies
 app.use(cookieParser(process.env.COOKIE_SECRET));
@@ -97,6 +99,7 @@ const mongoStore = MongoStore.create({
 // config session
 app.use(
   session({
+    name: process.env.SESSION_NAME,
     secret: process.env.COOKIE_SECRET,
     resave: false,
     saveUninitialized: false,
@@ -136,11 +139,14 @@ app.use(notFoundHandler);
 // error handler
 app.use(errorHandler);
 
-// init server
+// init port
 const PORT =
   process.env.PORT && process.env.NODE_ENV === 'production'
     ? process.env.PORT
     : 3000;
-app.listen(PORT, () => {
-  console.log(`Server listening at http://localhost:${PORT}`);
+
+// init server
+const server = http.createServer(app);
+server.listen(PORT, () => {
+  logger.debug(`Server listening at http://localhost:${PORT}`);
 });
