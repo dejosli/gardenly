@@ -124,10 +124,15 @@ section.register form,
     }
 }
 
+// a tag 
 .link {
     color: $primary;
 
     &:hover {
         color: $primary-hover;
     }
+}
+
+.link-dark {
+    color: $primary-hover;
 }

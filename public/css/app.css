@@ -1269,16 +1269,16 @@ select {
   padding-right: 0.5rem;
 }
 
+.pt-12 {
+  padding-top: 3rem;
+}
+
 .pt-20 {
   padding-top: 5rem;
 }
 
 .pb-4 {
   padding-bottom: 1rem;
-}
-
-.pt-12 {
-  padding-top: 3rem;
 }
 
 .text-left {
@@ -1516,6 +1516,10 @@ section.register form input:focus-visible,
 }
 
 .link:hover {
+  color: #b23301;
+}
+
+.link-dark {
   color: #b23301;
 }
 

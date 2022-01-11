@@ -6,15 +6,15 @@ const router = express.Router();
 const {
   addUserValidators,
   addUserValidationHandler,
-} = require('../app/http/middleware/auth/userValidators');
+} = require('../app/http/middleware/validators/userValidators');
 const {
   doLoginValidators,
   doLoginValidationHandler,
-} = require('../app/http/middleware/auth/loginValidators');
+} = require('../app/http/middleware/validators/loginValidators');
 const {
   doOrderInfoValidators,
   doOrderInfoValidationHandler,
-} = require('../app/http/middleware/customers/orderInfoValidators');
+} = require('../app/http/middleware/validators/orderInfoValidators');
 
 const { indexController } = require('../app/http/controllers/homeController');
 const {
@@ -23,7 +23,6 @@ const {
   registerController,
   loginController,
   logoutController,
-  isLoggedIn,
 } = require('../app/http/controllers/authController');
 const {
   initSessionCart,
@@ -37,6 +36,17 @@ const {
   orderStore,
 } = require('../app/http/controllers/customers/orderController');
 
+// Middlewares
+const isLoggedIn = require('../app/http/middleware/auth/isLoggedIn');
+const authGuard = require('../app/http/middleware/auth/authGuard');
+const authRole = require('../app/http/middleware/auth/authRole');
+
+// Admin routes controllers
+const {
+  adminOrderIndex,
+} = require('../app/http/controllers/admin/orderController');
+
+// write routes here
 // index routes
 router.get('/', initSessionCart, indexController);
 
@@ -71,11 +81,15 @@ router.delete('/delete-cart-item/:id', deleteCartItem);
 // order routes
 router.post(
   '/orders',
+  authGuard,
   doOrderInfoValidators,
   doOrderInfoValidationHandler,
   orderStore
 );
-router.get('/customer/orders', orderIndex);
+router.get('/customer/orders', authGuard, orderIndex);
+
+// Admin routes
+router.get('/admin/orders', authGuard, authRole('admin'), adminOrderIndex);
 
 // exports
 module.exports = router;

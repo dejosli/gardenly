@@ -3,16 +3,12 @@ const bcrypt = require('bcrypt');
 const passport = require('passport');
 
 // internal imports
+const logger = require('../middleware/common/logger');
 const User = require('../../models/People');
 const { mergeCart } = require('../controllers/customers/cartController');
 
-const isLoggedIn = (req, res, next) => {
-  // check if user is already logged in or not
-  if (req.isAuthenticated()) {
-    return res.redirect('/');
-  }
-  return next();
-};
+const redirectAdminUrl = '/admin/orders';
+const redirectCustomerUrl = 'customer/orders';
 
 // GET - login form
 const getLoginController = (req, res, next) => {
@@ -37,9 +33,9 @@ const loginController = (req, res, next) => {
       });
     }
     // logged in user
-    req.logIn(user, function (err) {
-      if (err) {
-        return next(err);
+    req.logIn(user, function (error) {
+      if (error) {
+        return next(error);
       }
       // merge session cart data and mongo cart data
       mergeCart(req, res)
@@ -48,12 +44,15 @@ const loginController = (req, res, next) => {
           return res.status(200).json({
             success: {
               msg: info.message,
-              redirectUrl: '/',
+              redirectUrl:
+                req.user.role === 'admin'
+                  ? redirectAdminUrl
+                  : redirectCustomerUrl,
             },
           });
         })
-        .catch((err) => {
-          console.log(err);
+        .catch((errors) => {
+          logger.debug(errors);
         });
     });
   })(req, res, next);
@@ -96,7 +95,7 @@ const registerController = async (req, res, next) => {
       },
     });
   } catch (err) {
-    console.log(err);
+    logger.debug(err);
   }
 };
 
@@ -107,5 +106,4 @@ module.exports = {
   registerController,
   loginController,
   logoutController,
-  isLoggedIn,
 };

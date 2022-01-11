@@ -2,6 +2,8 @@
 import axios from 'axios';
 import Noty from 'noty';
 import qs from 'qs';
+// internal imports
+import initAdmin from './admin';
 
 // variables
 const addToCart = document.querySelectorAll('.add-to-cart');
@@ -18,6 +20,7 @@ const incrementButtons = document.querySelectorAll(
 );
 const deleteItemButtons = document.querySelectorAll('.delete-item');
 const orderFormEle = document.getElementById('order-form');
+const orderAlertMsg = document.getElementById('success-alert');
 
 // notification - message
 const notyMessage = function (
@@ -304,3 +307,13 @@ deleteItemButtons.forEach((btn) => {
 if (orderFormEle) {
   orderFormEle.addEventListener('submit', orderSubmit);
 }
+
+// remove order success alert element
+if (orderAlertMsg) {
+  setTimeout(() => {
+    orderAlertMsg.remove();
+  }, 2000);
+}
+
+// initialize admin script
+initAdmin();
