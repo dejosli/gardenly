@@ -136,3 +136,118 @@ section.register form,
 .link-dark {
     color: $primary-hover;
 }
+
+// track order status
+section.status {
+    background-color: $secondary;
+    min-height: calc(100vh - $navbarHeight);
+}
+
+.status-box ul {
+    margin-left: 5.25rem;
+}
+
+// create dots
+.status_line span {
+    position: relative;
+    padding-left: 1.25rem;
+
+    &:before {
+        font-family: 'Line Awesome Free';
+        font-size: 48px;
+        font-weight: 600;
+        position: absolute;
+        left: -90px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: inherit;
+    }
+
+    &:after {
+        content: '';
+        position: absolute;
+        left: -10px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: $dark;
+        box-shadow: 0 0 1px 10px $secondary;
+    }
+}
+
+.status-box ul li:nth-child(1) span:before {
+    content: '\f46c';
+}
+
+.status-box ul li:nth-child(2) span:before {
+    content: '\f560';
+}
+
+.status-box ul li:nth-child(3) span:before {
+    content: '\f818';
+}
+
+.status-box ul li:nth-child(4) span:before {
+    content: '\f0d1';
+}
+
+.status-box ul li:nth-child(5) span:before {
+    content: '\f582';
+}
+
+// create line
+.status-box ul {
+    li {
+        position: relative;
+    }
+
+    li:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -6px;
+        width: 2px;
+        height: 100%;
+        background-color: $dark;
+        margin-top: 10px;
+    }
+
+    li:nth-child(5) span:after {
+        box-shadow: 0 20px 1px 20px $secondary;
+    }
+}
+
+// step completed
+.status_line {
+
+    // text
+    &.step-completed span {
+        color: $gray;
+    }
+
+    // line
+    &.step-completed:before {
+        background-color: $gray;
+    }
+
+    // dots 
+    &.step-completed span:after {
+        background-color: $gray;
+    }
+}
+
+// current step 
+.status_line {
+
+    // text
+    &.current span {
+        color: $primary;
+    }
+
+    // dots 
+    &.current span:after {
+        background-color: $primary;
+    }
+}

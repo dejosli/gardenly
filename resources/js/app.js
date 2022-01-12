@@ -21,6 +21,7 @@ const incrementButtons = document.querySelectorAll(
 const deleteItemButtons = document.querySelectorAll('.delete-item');
 const orderFormEle = document.getElementById('order-form');
 const orderAlertMsg = document.getElementById('success-alert');
+const hiddenStatusEle = document.getElementById('hiddenStatus');
 
 // notification - message
 const notyMessage = function (
@@ -317,3 +318,25 @@ if (orderAlertMsg) {
 
 // initialize admin script
 initAdmin();
+
+// change order status UI
+const updateStatusUI = (status) => {
+  const allStatus = document.querySelectorAll('.status_line');
+  let stepCompleted = true;
+
+  allStatus.forEach((inputStatus) => {
+    if (stepCompleted) {
+      inputStatus.classList.add('step-completed');
+    }
+    if (inputStatus.dataset.status === status) {
+      stepCompleted = false;
+      inputStatus.classList.remove('step-completed');
+      inputStatus.classList.add('current');
+    }
+  });
+};
+
+if (hiddenStatusEle) {
+  const status = hiddenStatusEle.value;
+  updateStatusUI(status);
+}

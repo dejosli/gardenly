@@ -1010,6 +1010,10 @@ select {
   display: grid;
 }
 
+.hidden {
+  display: none;
+}
+
 .h-40 {
   height: 10rem;
 }
@@ -1060,6 +1064,10 @@ select {
 
 .w-2\/5 {
   width: 40%;
+}
+
+.w-2\/3 {
+  width: 66.666667%;
 }
 
 .max-w-xs {
@@ -1281,6 +1289,14 @@ select {
   padding-bottom: 1rem;
 }
 
+.pt-16 {
+  padding-top: 4rem;
+}
+
+.pb-14 {
+  padding-bottom: 3.5rem;
+}
+
 .text-left {
   text-align: left;
 }
@@ -1381,6 +1397,11 @@ select {
 .text-orange-500 {
   --tw-text-opacity: 1;
   color: rgb(249 115 22 / var(--tw-text-opacity));
+}
+
+.text-green-600 {
+  --tw-text-opacity: 1;
+  color: rgb(22 163 74 / var(--tw-text-opacity));
 }
 
 .shadow-md {
@@ -1521,6 +1542,103 @@ section.register form input:focus-visible,
 
 .link-dark {
   color: #b23301;
+}
+
+section.status {
+  background-color: #F8F8F8;
+  min-height: calc(100vh - 86px);
+}
+
+.status-box ul {
+  margin-left: 5.25rem;
+}
+
+.status_line span {
+  position: relative;
+  padding-left: 1.25rem;
+}
+
+.status_line span:before {
+  font-family: "Line Awesome Free";
+  font-size: 48px;
+  font-weight: 600;
+  position: absolute;
+  left: -90px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: inherit;
+}
+
+.status_line span:after {
+  content: "";
+  position: absolute;
+  left: -10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #232323;
+  box-shadow: 0 0 1px 10px #F8F8F8;
+}
+
+.status-box ul li:nth-child(1) span:before {
+  content: "\f46c";
+}
+
+.status-box ul li:nth-child(2) span:before {
+  content: "\f560";
+}
+
+.status-box ul li:nth-child(3) span:before {
+  content: "\f818";
+}
+
+.status-box ul li:nth-child(4) span:before {
+  content: "\f0d1";
+}
+
+.status-box ul li:nth-child(5) span:before {
+  content: "\f582";
+}
+
+.status-box ul li {
+  position: relative;
+}
+
+.status-box ul li:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -6px;
+  width: 2px;
+  height: 100%;
+  background-color: #232323;
+  margin-top: 10px;
+}
+
+.status-box ul li:nth-child(5) span:after {
+  box-shadow: 0 20px 1px 20px #F8F8F8;
+}
+
+.status_line.step-completed span {
+  color: #ccc;
+}
+
+.status_line.step-completed:before {
+  background-color: #ccc;
+}
+
+.status_line.step-completed span:after {
+  background-color: #ccc;
+}
+
+.status_line.current span {
+  color: #FE5F1E;
+}
+
+.status_line.current span:after {
+  background-color: #FE5F1E;
 }
 
 .hover\:bg-gray-400:hover {

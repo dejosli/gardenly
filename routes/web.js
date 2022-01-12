@@ -45,6 +45,10 @@ const authRole = require('../app/http/middleware/auth/authRole');
 const {
   adminOrderIndex,
 } = require('../app/http/controllers/admin/orderController');
+const {
+  orderStatusUpdate,
+  trackOrderStatus,
+} = require('../app/http/controllers/admin/statusController');
 
 // write routes here
 // index routes
@@ -87,9 +91,16 @@ router.post(
   orderStore
 );
 router.get('/customer/orders', authGuard, orderIndex);
+router.get('/customer/orders/:id', authGuard, trackOrderStatus);
 
 // Admin routes
 router.get('/admin/orders', authGuard, authRole('admin'), adminOrderIndex);
+router.post(
+  '/admin/order/status',
+  authGuard,
+  authRole('admin'),
+  orderStatusUpdate
+);
 
 // exports
 module.exports = router;

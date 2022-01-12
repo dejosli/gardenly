@@ -77,29 +77,30 @@ function generateMarkup(orders) {
 // exports
 export default function () {
   const orderTableBody = document.querySelector('#orderTableBody');
-  let orders = [];
-  // fetch all orders
-  axios
-    .get('/admin/orders')
-    .then((res) => {
-      console.log(res.data);
-      orders = res.data;
-      orderTableBody.innerHTML = generateMarkup(orders);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  if (orderTableBody) {
+    let orders = [];
+    // fetch all orders
+    axios
+      .get('/admin/orders')
+      .then((res) => {
+        orders = res.data;
+        orderTableBody.innerHTML = generateMarkup(orders);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
-  // Socket
-  //   socket.on('orderPlaced', (order) => {
-  //     new Noty({
-  //       type: 'success',
-  //       timeout: 1000,
-  //       text: 'New order!',
-  //       progressBar: false,
-  //     }).show();
-  //     orders.unshift(order);
-  //     orderTableBody.innerHTML = '';
-  //     orderTableBody.innerHTML = generateMarkup(orders);
-  //   });
+    // Socket
+    //   socket.on('orderPlaced', (order) => {
+    //     new Noty({
+    //       type: 'success',
+    //       timeout: 1000,
+    //       text: 'New order!',
+    //       progressBar: false,
+    //     }).show();
+    //     orders.unshift(order);
+    //     orderTableBody.innerHTML = '';
+    //     orderTableBody.innerHTML = generateMarkup(orders);
+    //   });
+  }
 }
