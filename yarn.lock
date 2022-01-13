@@ -1090,6 +1090,11 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-16.11.12.tgz#ac7fb693ac587ee182c3780c26eb65546a1a3c10"
   integrity sha512-+2Iggwg7PxoO5Kyhvsq9VarmPbIelXP070HMImEpbtGCoyWNINQj4wzjbQCXzdHTRXnqufutJb5KAURZANNBAw==
 
+"@types/node@< 17.0.6":
+  version "17.0.5"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-17.0.5.tgz#57ca67ec4e57ad9e4ef5a6bab48a15387a1c83e0"
+  integrity sha512-w3mrvNXLeDYV1GKTZorGJQivK6XLCoGwpnyJFbJVK/aTBQUxOCaa/GlFAAN3OTDFcb7h5tiFG+YXCO2By+riZw==
+
 "@types/parse-json@^4.0.0":
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@types/parse-json/-/parse-json-4.0.0.tgz#2f8bb441434d163b35fb8ffdccd7138927ffb8c0"
@@ -3890,10 +3895,10 @@ jwtoken@^0.0.0:
   resolved "https://registry.yarnpkg.com/jwtoken/-/jwtoken-0.0.0.tgz#dd070385e0b4dfde4f95e0243e633250615116a4"
   integrity sha512-ksJY5AC2eo7FJ6HSpB6dacZI38njm46m0W13hzt1EojRtL5eXwdf/e8NHP81brPkczspmMCucpRjzBjN/J9DXw==
 
-kareem@2.3.2:
-  version "2.3.2"
-  resolved "https://registry.yarnpkg.com/kareem/-/kareem-2.3.2.tgz#78c4508894985b8d38a0dc15e1a8e11078f2ca93"
-  integrity sha512-STHz9P7X2L4Kwn72fA4rGyqyXdmrMSdxqHx9IXon/FXluXieaFA6KJ2upcHAHxQPQ0LeM/OjLrhFxifHewOALQ==
+kareem@2.3.3:
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/kareem/-/kareem-2.3.3.tgz#a4432d7965a5bb06fc2b4eeae71317344c9a756a"
+  integrity sha512-uESCXM2KdtOQ8LOvKyTUXEeg0MkYp4wGglTIpGcYHvjJcS5sn2Wkfrfit8m4xSbaNDAw2KdI9elgkOxZbrFYbg==
 
 keyv@^3.0.0:
   version "3.1.0"
@@ -4279,13 +4284,14 @@ mongodb@4.2.2:
   optionalDependencies:
     saslprep "^1.0.3"
 
-mongoose@^6.1.2:
-  version "6.1.2"
-  resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-6.1.2.tgz#0a394e20a4dc86a245f7f26902ecb5c989ee223f"
-  integrity sha512-/CNxPVSPnaRNKndlhVOblFSB8kfpHWuAiJSEoVqs/pjS42actV7m/Wk0o0RbsndUvJ1WUenoXpbG8lrD9atGlQ==
+mongoose@^6.1.3:
+  version "6.1.6"
+  resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-6.1.6.tgz#47903ef821b63fc5ef80a259c2331cabf994c957"
+  integrity sha512-wvNRJ547x/Bn3EMhwbVInNsEp2OdlMxk4Q/vfgAkw8OI+giZQ72S90ZH0H6VzzIhs4lCU9SwXHYa2O0sPicnEQ==
   dependencies:
+    "@types/node" "< 17.0.6"
     bson "^4.2.2"
-    kareem "2.3.2"
+    kareem "2.3.3"
     mongodb "4.2.2"
     mpath "0.8.4"
     mquery "4.0.0"
