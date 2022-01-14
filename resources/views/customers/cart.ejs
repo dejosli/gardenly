@@ -22,46 +22,17 @@
         <!-- quantity counter start -->
         <div class="custom-number-input h-10 w-full ml-16 flex-1">
           <div
-            class="
-              flex flex-row
-              h-10
-              w-3/5
-              rounded-lg
-              relative
-              bg-transparent
-              mt-1
-            "
+            class="flex flex-row h-10 w-3/5 rounded-lg relative bg-transparent mt-1"
           >
             <button
               data-action="decrement"
-              class="
-                bg-gray-300
-                text-gray-600
-                hover:text-gray-700 hover:bg-gray-400
-                h-full
-                w-20
-                rounded-l
-                cursor-pointer
-                outline-none
-              "
+              class="bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-l cursor-pointer outline-none"
             >
               <span class="m-auto text-2xl font-thin">−</span>
             </button>
             <input
               type="number"
-              class="
-                focus:ring-transparent focus:outline-none
-                text-center
-                w-full
-                bg-gray-200
-                font-semibold
-                text-md
-                md:text-basecursor-default
-                flex
-                items-center
-                text-black
-                outline-none
-              "
+              class="focus:ring-transparent focus:outline-none text-center w-full bg-gray-200 font-semibold text-md md:text-basecursor-default flex items-center text-black outline-none"
               name="custom-input-number"
               value="<%= pizza.qty %>"
               min="1"
@@ -69,15 +40,7 @@
             />
             <button
               data-action="increment"
-              class="
-                bg-gray-300
-                text-gray-600
-                hover:text-gray-700 hover:bg-gray-400
-                h-full
-                w-20
-                rounded-r
-                cursor-pointer
-              "
+              class="bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-r cursor-pointer"
             >
               <span class="m-auto text-2xl font-thin">+</span>
             </button>
@@ -89,13 +52,7 @@
           >৳<%= pizza.qty * pizza.item.price %></span
         >
         <span
-          class="
-            delete-item
-            cursor-pointer
-            font-bold
-            text-xl text-orange-500
-            hover:text-orange-700
-          "
+          class="delete-item cursor-pointer font-bold text-xl text-orange-500 hover:text-orange-700"
           >x</span
         >
       </div>
@@ -113,43 +70,22 @@
       <div class="mt-12 shipping-info">
         <form id="order-form" method="POST" action="/orders">
           <input
-            class="
-              border border-gray-400
-              p-2
-              w-1/2
-              mb-4
-              rounded-lg
-              focus:outline-none focus:ring-transparent
-            "
+            class="border border-gray-400 p-2 w-1/2 mb-4 rounded-lg focus:outline-none focus:ring-transparent"
             type="text"
             name="mobile"
-            placeholder="Mobile number"
+            placeholder="Please type 11 digit mobile number"
           />
           <input
-            class="
-              border border-gray-400
-              p-2
-              w-1/2
-              rounded-lg
-              focus:outline-none focus:ring-transparent
-            "
+            class="border border-gray-400 p-2 w-1/2 rounded-lg focus:outline-none focus:ring-transparent"
             type="text"
             name="address"
-            placeholder="Shipping address"
+            placeholder="Please type your shipping address"
           />
 
           <div>
             <button
               type="submit"
-              class="
-                btn-primary
-                font-bold
-                text-white
-                py-2
-                px-6
-                rounded-full
-                mt-6
-              "
+              class="btn-primary font-bold text-white py-2 px-6 rounded-full mt-6"
             >
               Order Now
             </button>
@@ -159,16 +95,7 @@
       <% } else { %>
       <a
         href="/login"
-        class="
-          inline-block
-          btn-primary
-          font-bold
-          text-white
-          py-2
-          px-6
-          rounded-full
-          mt-6
-        "
+        class="inline-block btn-primary font-bold text-white py-2 px-6 rounded-full mt-6"
         >Login to continue</a
       >
       <% } %>
