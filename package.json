@@ -29,7 +29,7 @@
     "hpp": "^0.2.3",
     "http-errors": "^2.0.0",
     "jwtoken": "^0.0.0",
-    "moment": "^2.29.1",
+    "moment": "^2.29.2",
     "mongoose": "^6.1.2",
     "morgan": "^1.10.0",
     "noty": "^3.2.0-beta-deprecated",
