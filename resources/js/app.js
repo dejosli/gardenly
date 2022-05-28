@@ -1,9 +1,13 @@
 // external imports
 import axios from 'axios';
+import moment from 'moment';
 import Noty from 'noty';
 import qs from 'qs';
 // internal imports
 import initAdmin from './admin';
+
+// init socket
+const socket = io();
 
 // variables
 const addToCart = document.querySelectorAll('.add-to-cart');
@@ -317,26 +321,50 @@ if (orderAlertMsg) {
 }
 
 // initialize admin script
-initAdmin();
+initAdmin(socket);
+
+const timeEle = document.createElement('small');
 
 // change order status UI
-const updateStatusUI = (status) => {
+const updateStatusUI = (status, updatedAt) => {
   const allStatus = document.querySelectorAll('.status_line');
   let stepCompleted = true;
 
   allStatus.forEach((inputStatus) => {
+    inputStatus.classList.remove('step-completed');
+
     if (stepCompleted) {
       inputStatus.classList.add('step-completed');
     }
+
     if (inputStatus.dataset.status === status) {
       stepCompleted = false;
-      inputStatus.classList.remove('step-completed');
-      inputStatus.classList.add('current');
+      timeEle.innerText = moment(updatedAt).format('lll');
+      inputStatus.appendChild(timeEle);
+      if (inputStatus.nextElementSibling) {
+        inputStatus.classList.remove('current');
+        inputStatus.nextElementSibling.classList.add('current');
+      }
+      if (!inputStatus.nextElementSibling) {
+        inputStatus.classList.remove('current');
+        inputStatus.classList.add('step-completed');
+      }
     }
   });
 };
 
 if (hiddenStatusEle) {
-  const status = hiddenStatusEle.value;
-  updateStatusUI(status);
+  const { _id, status, updatedAt } = JSON.parse(hiddenStatusEle.value);
+  updateStatusUI(status, updatedAt);
+  // Socket
+  socket.emit('join', `order_${_id}`);
+  socket.on('orderStatusUpdated', (data) => {
+    updateStatusUI(data.status, data.updatedAt);
+  });
+}
+
+const adminPath = window.location.pathname;
+console.log(adminPath);
+if (adminPath.includes('admin')) {
+  socket.emit('join', 'adminRoom');
 }

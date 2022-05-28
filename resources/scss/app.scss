@@ -240,6 +240,10 @@ section.status {
 
 // current step 
 .status_line {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 
     // text
     &.current span {
@@ -249,5 +253,9 @@ section.status {
     // dots 
     &.current span:after {
         background-color: $primary;
+    }
+
+    small {
+        font-size: 14px;
     }
 }

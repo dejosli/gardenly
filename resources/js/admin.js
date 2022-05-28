@@ -75,7 +75,7 @@ function generateMarkup(orders) {
 }
 
 // exports
-export default function () {
+export default function (socket) {
   const orderTableBody = document.querySelector('#orderTableBody');
   if (orderTableBody) {
     let orders = [];
@@ -91,16 +91,11 @@ export default function () {
       });
 
     // Socket
-    //   socket.on('orderPlaced', (order) => {
-    //     new Noty({
-    //       type: 'success',
-    //       timeout: 1000,
-    //       text: 'New order!',
-    //       progressBar: false,
-    //     }).show();
-    //     orders.unshift(order);
-    //     orderTableBody.innerHTML = '';
-    //     orderTableBody.innerHTML = generateMarkup(orders);
-    //   });
+    socket.on('orderPlaced', (order) => {
+      orders.unshift(order);
+      console.log(order.customerId.username);
+      orderTableBody.innerHTML = '';
+      orderTableBody.innerHTML = generateMarkup(orders);
+    });
   }
 }

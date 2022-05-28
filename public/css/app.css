@@ -292,7 +292,7 @@
 }
 
 /*
-! tailwindcss v3.0.1 | MIT License | https://tailwindcss.com
+! tailwindcss v3.0.13 | MIT License | https://tailwindcss.com
 */
 
 /*
@@ -306,7 +306,7 @@
   box-sizing: border-box; /* 1 */
   border-width: 0; /* 2 */
   border-style: solid; /* 2 */
-  border-color: currentColor; /* 2 */
+  border-color: #e5e7eb; /* 2 */
 }
 
 ::before,
@@ -356,7 +356,7 @@ hr {
 Add the correct text decoration in Chrome, Edge, and Safari.
 */
 
-abbr[title] {
+abbr:where([title]) {
   -webkit-text-decoration: underline dotted;
           text-decoration: underline dotted;
 }
@@ -443,7 +443,7 @@ sup {
 table {
   text-indent: 0; /* 1 */
   border-color: inherit; /* 2 */
-  border-collapse: collapse;  /* 3 */
+  border-collapse: collapse; /* 3 */
 }
 
 /*
@@ -608,18 +608,18 @@ textarea {
 */
 
 input::-moz-placeholder, textarea::-moz-placeholder {
-  opacity: 1;  /* 1 */
+  opacity: 1; /* 1 */
   color: #9ca3af; /* 2 */
 }
 
 input:-ms-input-placeholder, textarea:-ms-input-placeholder {
-  opacity: 1;  /* 1 */
+  opacity: 1; /* 1 */
   color: #9ca3af; /* 2 */
 }
 
 input::placeholder,
 textarea::placeholder {
-  opacity: 1;  /* 1 */
+  opacity: 1; /* 1 */
   color: #9ca3af; /* 2 */
 }
 
@@ -674,29 +674,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 [hidden] {
   display: none;
-}
-
-.border, .border-b {
-  --tw-border-opacity: 1;
-  border-color: rgb(229 231 235 / var(--tw-border-opacity));
-}
-
-.shadow-md {
-  --tw-ring-offset-shadow: 0 0 #0000;
-  --tw-ring-shadow: 0 0 #0000;
-  --tw-shadow: 0 0 #0000;
-  --tw-shadow-colored: 0 0 #0000;
-}
-
-.focus\:ring-4 {
-  --tw-ring-inset: var(--tw-empty,/*!*/ /*!*/);
-  --tw-ring-offset-width: 0px;
-  --tw-ring-offset-color: #fff;
-  --tw-ring-color: rgb(59 130 246 / 0.5);
-  --tw-ring-offset-shadow: 0 0 #0000;
-  --tw-ring-shadow: 0 0 #0000;
-  --tw-shadow: 0 0 #0000;
-  --tw-shadow-colored: 0 0 #0000;
 }
 
 [type='text'],[type='email'],[type='url'],[type='password'],[type='number'],[type='date'],[type='datetime-local'],[type='month'],[type='search'],[type='tel'],[type='time'],[type='week'],[multiple],textarea,select {
@@ -863,6 +840,51 @@ select {
 
 [type='file']:focus {
   outline: 1px auto -webkit-focus-ring-color;
+}
+
+*, ::before, ::after {
+  --tw-translate-x: 0;
+  --tw-translate-y: 0;
+  --tw-rotate: 0;
+  --tw-skew-x: 0;
+  --tw-skew-y: 0;
+  --tw-scale-x: 1;
+  --tw-scale-y: 1;
+  --tw-pan-x:  ;
+  --tw-pan-y:  ;
+  --tw-pinch-zoom:  ;
+  --tw-scroll-snap-strictness: proximity;
+  --tw-ordinal:  ;
+  --tw-slashed-zero:  ;
+  --tw-numeric-figure:  ;
+  --tw-numeric-spacing:  ;
+  --tw-numeric-fraction:  ;
+  --tw-ring-inset:  ;
+  --tw-ring-offset-width: 0px;
+  --tw-ring-offset-color: #fff;
+  --tw-ring-color: rgb(59 130 246 / 0.5);
+  --tw-ring-offset-shadow: 0 0 #0000;
+  --tw-ring-shadow: 0 0 #0000;
+  --tw-shadow: 0 0 #0000;
+  --tw-shadow-colored: 0 0 #0000;
+  --tw-blur:  ;
+  --tw-brightness:  ;
+  --tw-contrast:  ;
+  --tw-grayscale:  ;
+  --tw-hue-rotate:  ;
+  --tw-invert:  ;
+  --tw-saturate:  ;
+  --tw-sepia:  ;
+  --tw-drop-shadow:  ;
+  --tw-backdrop-blur:  ;
+  --tw-backdrop-brightness:  ;
+  --tw-backdrop-contrast:  ;
+  --tw-backdrop-grayscale:  ;
+  --tw-backdrop-hue-rotate:  ;
+  --tw-backdrop-invert:  ;
+  --tw-backdrop-opacity:  ;
+  --tw-backdrop-saturate:  ;
+  --tw-backdrop-sepia:  ;
 }
 
 .container {
@@ -1633,12 +1655,23 @@ section.status {
   background-color: #ccc;
 }
 
+.status_line {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .status_line.current span {
   color: #FE5F1E;
 }
 
 .status_line.current span:after {
   background-color: #FE5F1E;
+}
+
+.status_line small {
+  font-size: 14px;
 }
 
 .hover\:bg-gray-400:hover {
@@ -1657,7 +1690,8 @@ section.status {
 }
 
 .hover\:underline:hover {
-  text-decoration: underline;
+  -webkit-text-decoration-line: underline;
+          text-decoration-line: underline;
 }
 
 .focus\:outline-none:focus {
@@ -1673,25 +1707,6 @@ section.status {
 
 .focus\:ring-transparent:focus {
   --tw-ring-color: transparent;
-}
-
-.custom-number-input input[type=number],
-.focus\:outline-none:focus input[type=number] {
-  border: 1px solid transparent !important;
-}
-
-.custom-number-input input:focus,
-.custom-number-input input:focus-visible,
-.focus\:outline-none:focus input:focus,
-.outline-none input:focus-visible {
-  outline: none !important;
-}
-
-.custom-number-input button:focus,
-.custom-number-input button:focus-visible,
-.focus\:outline-none:focus button:focus,
-.outline-none button:focus-visible {
-  outline: none !important;
 }
 
 @media (min-width: 640px) {

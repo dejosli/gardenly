@@ -8,6 +8,8 @@ const orderStatusUpdate = async function (req, res, next) {
   try {
     const { orderId, status } = req.body;
     await Order.updateOne({ _id: orderId }, { status: status });
+    const eventsEmitter = req.app.get('eventsEmitter');
+    eventsEmitter.emit('orderStatusUpdated', { id: orderId, status: status });
     res.redirect('/admin/orders');
   } catch {
     res.redirect('/admin/orders');

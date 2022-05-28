@@ -17,6 +17,7 @@ const orderStore = async function (req, res, next) {
       mobile,
       address,
     });
+
     await order.save();
     // delete user cart from db
     await MongoCart.deleteOne({ userId: req.user._id });
@@ -24,6 +25,12 @@ const orderStore = async function (req, res, next) {
     delete req.session.cart;
     // send flash message to the user
     req.flash('success', 'Order Placed Successfully');
+
+    // Emitter
+    order = await Order.populate(order, { path: 'customerId' });
+    const eventsEmitter = req.app.get('eventsEmitter');
+    eventsEmitter.emit('orderPlaced', order);
+    // send json response
     return res.status(201).json({
       success: {
         message: 'Order Placed Successfully',
