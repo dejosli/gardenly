@@ -12,7 +12,7 @@
     "build:watch": "mix watch"
   },
   "dependencies": {
-    "axios": "^0.24.0",
+    "axios": "^1.6.4",
     "bcrypt": "^5.0.1",
     "compression": "^1.7.4",
     "connect-mongo": "^4.6.0",
